@@ -359,6 +359,283 @@
             height: 1px;
             background: linear-gradient(to right, #FF333E, transparent);
         }
+
+        /* ── Portfolio ── */
+        .portfolio-shell {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-shell::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.6;
+            background:
+                radial-gradient(800px 320px at 15% 20%, rgba(255, 51, 62, 0.14), transparent 60%),
+                radial-gradient(700px 420px at 85% 55%, rgba(153, 31, 37, 0.18), transparent 60%),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.0));
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .portfolio-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+        }
+
+        @media (min-width: 1024px) {
+            .portfolio-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 18px; }
+            .portfolio-span-7 { grid-column: span 7 / span 7; }
+            .portfolio-span-5 { grid-column: span 5 / span 5; }
+            .portfolio-span-4 { grid-column: span 4 / span 4; }
+            .portfolio-span-6 { grid-column: span 6 / span 6; }
+        }
+
+        .pf-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1), border-color 400ms ease, background 400ms ease, box-shadow 600ms ease;
+            transform: translateZ(0);
+        }
+
+        .pf-card:hover {
+            border-color: rgba(255, 51, 62, 0.5);
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), 0 12px 40px rgba(255, 51, 62, 0.08);
+            transform: translateY(-6px);
+        }
+
+        .pf-card:focus-within {
+            outline: 2px solid rgba(255, 51, 62, 0.7);
+            outline-offset: 4px;
+        }
+
+        .pf-media {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: saturate(0.95) contrast(1.02);
+            transform: scale(1.03);
+            transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1), filter 600ms ease;
+        }
+
+        .pf-card:hover .pf-media {
+            transform: scale(1.08);
+            filter: saturate(1.08) contrast(1.06);
+        }
+
+        .pf-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(500px 280px at 50% 80%, rgba(255, 51, 62, 0.18), transparent 60%),
+                linear-gradient(to top, rgba(9, 9, 9, 0.92), rgba(9, 9, 9, 0.22), rgba(9, 9, 9, 0.0));
+            opacity: 0.95;
+            transition: opacity 500ms ease;
+        }
+
+        .pf-card:hover .pf-overlay { opacity: 1; }
+
+        .pf-meta {
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 18px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px;
+            pointer-events: none;
+        }
+
+        .pf-title {
+            font-family: 'Manrope', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        .pf-chip {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(0, 0, 0, 0.55);
+            padding: 8px 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .pf-chip .dot {
+            width: 6px;
+            height: 6px;
+            background: #FF333E;
+            display: inline-block;
+        }
+
+        .pf-actions {
+            display: flex;
+            gap: 10px;
+            pointer-events: auto;
+        }
+
+        .pf-btn {
+            height: 42px;
+            min-width: 42px;
+            padding: 0 14px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(0, 0, 0, 0.55);
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: border-color 250ms ease, background 250ms ease, transform 250ms ease;
+            user-select: none;
+        }
+
+        .pf-btn:hover { border-color: rgba(255, 51, 62, 0.55); background: rgba(0, 0, 0, 0.72); transform: translateY(-1px); }
+        .pf-btn:active { transform: translateY(0); }
+
+        .pf-filter {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            color: rgba(255, 255, 255, 0.78);
+            padding: 12px 14px;
+            transition: border-color 250ms ease, background 250ms ease, color 250ms ease, transform 250ms ease;
+        }
+
+        .pf-filter[aria-pressed="true"] {
+            border-color: rgba(255, 51, 62, 0.6);
+            background: rgba(255, 51, 62, 0.10);
+            color: #fff;
+        }
+
+        .pf-filter:hover { border-color: rgba(255, 255, 255, 0.25); transform: translateY(-1px); }
+
+        .pf-hidden { display: none !important; }
+
+        /* Lightbox */
+        .pf-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            display: none;
+        }
+
+        .pf-modal[aria-hidden="false"] { display: block; }
+
+        .pf-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .pf-modal-panel {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+        }
+
+        .pf-modal-content {
+            width: min(1100px, 100%);
+            max-height: min(78vh, 760px);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(10, 10, 10, 0.86);
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pf-modal-img {
+            width: 100%;
+            height: min(78vh, 760px);
+            object-fit: contain;
+            background: radial-gradient(700px 280px at 50% 70%, rgba(255, 51, 62, 0.12), transparent 60%),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.2));
+        }
+
+        .pf-modal-topbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent);
+        }
+
+        .pf-modal-topbar > * { pointer-events: auto; }
+
+        .pf-kbd {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            display: inline-flex;
+            gap: 10px;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(0, 0, 0, 0.55);
+            padding: 10px 12px;
+        }
+
+        .pf-kbd kbd {
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            padding: 3px 6px;
+            background: rgba(255, 255, 255, 0.05);
+            font-family: inherit;
+            font-size: 10px;
+        }
+
+        .pf-modal-nav {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .pf-modal-nav button {
+            pointer-events: auto;
+            margin: 0 10px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pf-card, .pf-media, .pf-filter, .pf-btn { transition: none !important; }
+        }
     </style>
 </head>
 
@@ -824,7 +1101,192 @@
     </section>
 
     <!-- ════════════════════════════════════════════
-         TERCEIRA DOBRA — HABILIDADES
+         TERCEIRA DOBRA — PORTFÓLIO
+    ════════════════════════════════════════════ -->
+    <section id="portfolio" class="portfolio-shell relative w-full py-24 md:py-32 overflow-hidden">
+        <div class="absolute inset-0 bg-grid opacity-40 pointer-events-none"></div>
+        <div class="absolute -top-24 -left-20 w-[520px] h-[520px] bg-brand/10 blur-[110px] rounded-full pointer-events-none"></div>
+        <div class="absolute -bottom-20 -right-24 w-[420px] h-[420px] bg-brand-dark/15 blur-[110px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
+                <div class="pf-reveal">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="w-1.5 h-1.5 bg-brand animate-pulse inline-block"></span>
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-brand">Portfólio</span>
+                        <div class="flex-1 h-px bg-gradient-to-r from-zinc-800 to-transparent"></div>
+                    </div>
+                    <h2 class="text-4xl sm:text-5xl lg:text-6xl font-display font-medium tracking-tighter text-white leading-[1.05]">
+                        Projetos que viram
+                        <span class="neon-text text-glow block">experiência.</span>
+                    </h2>
+                    <p class="text-zinc-400 font-sans text-base md:text-lg leading-relaxed max-w-2xl mt-6">
+                        Um playground de layouts, direções de arte e microinterações. Clique em qualquer card para abrir em tela cheia.
+                    </p>
+                </div>
+
+                <div class="pf-reveal flex flex-col items-stretch gap-3 min-w-[260px]">
+                    <div class="flex items-center justify-between gap-3">
+                        <button class="pf-filter" type="button" aria-pressed="true" data-filter="all">
+                            Todos
+                        </button>
+                        <button class="pf-filter" type="button" aria-pressed="false" data-filter="web">
+                            Web
+                        </button>
+                        <button class="pf-filter" type="button" aria-pressed="false" data-filter="ui">
+                            UI
+                        </button>
+                        <button class="pf-filter" type="button" aria-pressed="false" data-filter="brand">
+                            Brand
+                        </button>
+                    </div>
+                    <button id="pf-random" type="button"
+                        class="pf-filter border-brand/30 hover:border-brand/60 bg-brand/10 hover:bg-brand/15 text-white">
+                        Abrir um aleatório <span class="pf-kbd"><kbd>R</kbd></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-14">
+                <div class="portfolio-grid" id="pf-grid">
+                    <article class="pf-card portfolio-span-7 pf-reveal" data-tags="web,ui">
+                        <button class="pf-open" type="button" aria-label="Abrir projeto 01"
+                            data-title="Projeto 01 — Landing Cinemática" data-tags="Web • UI"
+                            data-src="assets/sites/project-01.png">
+                            <img class="pf-media" src="assets/sites/project-01.png" alt="Projeto 01 — Landing Cinemática" loading="lazy" decoding="async" />
+                            <span class="pf-overlay" aria-hidden="true"></span>
+                            <div class="pf-meta">
+                                <div>
+                                    <div class="pf-title">Landing Cinemática</div>
+                                    <div class="pf-chip"><span class="dot"></span> Web • UI</div>
+                                </div>
+                                <div class="pf-actions" aria-hidden="true">
+                                    <span class="pf-btn">Ver</span>
+                                    <span class="pf-btn">Detalhes</span>
+                                </div>
+                            </div>
+                        </button>
+                    </article>
+
+                    <article class="pf-card portfolio-span-5 pf-reveal" data-tags="brand,web">
+                        <button class="pf-open" type="button" aria-label="Abrir projeto 02"
+                            data-title="Projeto 02 — Identidade + Site" data-tags="Brand • Web"
+                            data-src="assets/sites/project-02.png">
+                            <img class="pf-media" src="assets/sites/project-02.png" alt="Projeto 02 — Identidade + Site" loading="lazy" decoding="async" />
+                            <span class="pf-overlay" aria-hidden="true"></span>
+                            <div class="pf-meta">
+                                <div>
+                                    <div class="pf-title">Identidade + Site</div>
+                                    <div class="pf-chip"><span class="dot"></span> Brand • Web</div>
+                                </div>
+                                <div class="pf-actions" aria-hidden="true">
+                                    <span class="pf-btn">Ver</span>
+                                </div>
+                            </div>
+                        </button>
+                    </article>
+
+                    <article class="pf-card portfolio-span-4 pf-reveal" data-tags="ui">
+                        <button class="pf-open" type="button" aria-label="Abrir projeto 03"
+                            data-title="Projeto 03 — UI System Shots" data-tags="UI"
+                            data-src="assets/sites/project-03.png">
+                            <img class="pf-media" src="assets/sites/project-03.png" alt="Projeto 03 — UI System Shots" loading="lazy" decoding="async" />
+                            <span class="pf-overlay" aria-hidden="true"></span>
+                            <div class="pf-meta">
+                                <div>
+                                    <div class="pf-title">UI System Shots</div>
+                                    <div class="pf-chip"><span class="dot"></span> UI</div>
+                                </div>
+                                <div class="pf-actions" aria-hidden="true">
+                                    <span class="pf-btn">Ver</span>
+                                </div>
+                            </div>
+                        </button>
+                    </article>
+
+                    <article class="pf-card portfolio-span-4 pf-reveal" data-tags="web">
+                        <button class="pf-open" type="button" aria-label="Abrir projeto 04"
+                            data-title="Projeto 04 — Página de Produto" data-tags="Web"
+                            data-src="assets/sites/project-04.png">
+                            <img class="pf-media" src="assets/sites/project-04.png" alt="Projeto 04 — Página de Produto" loading="lazy" decoding="async" />
+                            <span class="pf-overlay" aria-hidden="true"></span>
+                            <div class="pf-meta">
+                                <div>
+                                    <div class="pf-title">Página de Produto</div>
+                                    <div class="pf-chip"><span class="dot"></span> Web</div>
+                                </div>
+                                <div class="pf-actions" aria-hidden="true">
+                                    <span class="pf-btn">Ver</span>
+                                </div>
+                            </div>
+                        </button>
+                    </article>
+
+                    <article class="pf-card portfolio-span-4 pf-reveal" data-tags="brand,ui">
+                        <button class="pf-open" type="button" aria-label="Abrir projeto 05"
+                            data-title="Projeto 05 — Direção de Arte" data-tags="Brand • UI"
+                            data-src="assets/sites/project-05.png">
+                            <img class="pf-media" src="assets/sites/project-05.png" alt="Projeto 05 — Direção de Arte" loading="lazy" decoding="async" />
+                            <span class="pf-overlay" aria-hidden="true"></span>
+                            <div class="pf-meta">
+                                <div>
+                                    <div class="pf-title">Direção de Arte</div>
+                                    <div class="pf-chip"><span class="dot"></span> Brand • UI</div>
+                                </div>
+                                <div class="pf-actions" aria-hidden="true">
+                                    <span class="pf-btn">Ver</span>
+                                </div>
+                            </div>
+                        </button>
+                    </article>
+                </div>
+
+                <div class="mt-10 flex items-center justify-between gap-6 pf-reveal">
+                    <div class="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500">
+                        Dicas: <span class="pf-kbd"><kbd>Esc</kbd></span> fechar · <span class="pf-kbd"><kbd>←</kbd><kbd>→</kbd></span> navegar · <span class="pf-kbd"><kbd>R</kbd></span> aleatório
+                    </div>
+                    <a href="#contato"
+                        class="hidden sm:flex items-center gap-2 bg-transparent text-white px-5 py-2.5 rounded-none text-xs font-bold uppercase tracking-widest hover:bg-brand hover:text-white transition-all border border-brand/50 hover:border-brand shadow-[0_0_15px_rgba(255,51,62,0.12)] group">
+                        Vamos criar algo <i data-lucide="sparkles" class="w-4 h-4 group-hover:rotate-6 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal / Lightbox -->
+        <div class="pf-modal" id="pf-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Visualização de projeto">
+            <div class="pf-modal-backdrop" data-pf-close="true"></div>
+            <div class="pf-modal-panel">
+                <div class="pf-modal-topbar">
+                    <div class="flex items-center gap-3">
+                        <span class="text-[10px] font-mono uppercase tracking-[0.25em] text-brand">Preview</span>
+                        <span class="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500" id="pf-modal-tags"></span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button class="pf-btn" type="button" id="pf-prev" aria-label="Anterior (seta esquerda)">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        </button>
+                        <button class="pf-btn" type="button" id="pf-next" aria-label="Próximo (seta direita)">
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                        <button class="pf-btn" type="button" data-pf-close="true" aria-label="Fechar (Esc)">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="pf-modal-content">
+                    <img class="pf-modal-img" id="pf-modal-img" alt="" />
+                </div>
+                <div class="pf-modal-nav" aria-hidden="true">
+                    <button type="button">←</button>
+                    <button type="button">→</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════
+         QUARTA DOBRA — HABILIDADES
     ════════════════════════════════════════════ -->
     <section id="habilidades" class="skills-section w-full py-0">
 
@@ -1066,6 +1528,188 @@
         document.addEventListener("DOMContentLoaded", () => {
             // Initialize Icons
             lucide.createIcons();
+
+            // ════════════════════════════════════════════
+            // PORTFÓLIO — Filters + Lightbox
+            // ════════════════════════════════════════════
+            const pf = (() => {
+                const grid = document.getElementById('pf-grid');
+                const filterButtons = Array.from(document.querySelectorAll('.pf-filter[data-filter]'));
+                const randomBtn = document.getElementById('pf-random');
+
+                const modal = document.getElementById('pf-modal');
+                const modalImg = document.getElementById('pf-modal-img');
+                const modalTags = document.getElementById('pf-modal-tags');
+                const prevBtn = document.getElementById('pf-prev');
+                const nextBtn = document.getElementById('pf-next');
+                const closeBtns = Array.from(document.querySelectorAll('[data-pf-close="true"]'));
+
+                if (!grid || !modal || !modalImg || !modalTags || !prevBtn || !nextBtn) return null;
+
+                const items = Array.from(grid.querySelectorAll('.pf-open'));
+                let currentIndex = -1;
+                let lastFocused = null;
+
+                const getActiveFilter = () => {
+                    const btn = filterButtons.find(b => b.getAttribute('aria-pressed') === 'true');
+                    return btn?.dataset.filter || 'all';
+                };
+
+                const getVisibleButtons = () => {
+                    const filter = getActiveFilter();
+                    return items.filter((btn) => {
+                        const card = btn.closest('[data-tags]');
+                        if (!card) return false;
+                        if (filter === 'all') return !card.classList.contains('pf-hidden');
+                        const tags = (card.dataset.tags || '').split(',').map(s => s.trim()).filter(Boolean);
+                        return !card.classList.contains('pf-hidden') && tags.includes(filter);
+                    });
+                };
+
+                const setModalState = (isOpen) => {
+                    modal.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                };
+
+                const openAt = (index, { focus = true } = {}) => {
+                    if (index < 0 || index >= items.length) return;
+                    const btn = items[index];
+                    const src = btn.dataset.src || '';
+                    const title = btn.dataset.title || btn.getAttribute('aria-label') || 'Projeto';
+                    const tags = btn.dataset.tags || '';
+
+                    currentIndex = index;
+                    lastFocused = document.activeElement;
+
+                    modalImg.src = src;
+                    modalImg.alt = title;
+                    modalTags.textContent = tags;
+                    setModalState(true);
+                    lucide.createIcons();
+
+                    if (focus) {
+                        const closeBtn = closeBtns[0] || modal.querySelector('button');
+                        closeBtn?.focus({ preventScroll: true });
+                    }
+                };
+
+                const close = () => {
+                    setModalState(false);
+                    modalImg.removeAttribute('src');
+                    modalImg.alt = '';
+                    modalTags.textContent = '';
+                    if (lastFocused && typeof lastFocused.focus === 'function') {
+                        lastFocused.focus({ preventScroll: true });
+                    }
+                };
+
+                const step = (dir) => {
+                    if (currentIndex === -1) return;
+                    const visible = getVisibleButtons();
+                    if (visible.length === 0) return;
+
+                    const currentBtn = items[currentIndex];
+                    const pos = visible.indexOf(currentBtn);
+                    const nextPos = pos === -1 ? 0 : (pos + dir + visible.length) % visible.length;
+                    const nextBtnEl = visible[nextPos];
+                    const nextIndex = items.indexOf(nextBtnEl);
+                    openAt(nextIndex, { focus: false });
+                };
+
+                const applyFilter = (filter) => {
+                    const cards = Array.from(grid.querySelectorAll('[data-tags]'));
+                    cards.forEach((card) => {
+                        const tags = (card.dataset.tags || '').split(',').map(s => s.trim()).filter(Boolean);
+                        const show = filter === 'all' ? true : tags.includes(filter);
+                        card.classList.toggle('pf-hidden', !show);
+                    });
+                };
+
+                const setFilter = (filter) => {
+                    filterButtons.forEach((btn) => {
+                        btn.setAttribute('aria-pressed', btn.dataset.filter === filter ? 'true' : 'false');
+                    });
+                    applyFilter(filter);
+                };
+
+                // Wire open buttons
+                items.forEach((btn, idx) => {
+                    btn.addEventListener('click', () => openAt(idx));
+                });
+
+                // Wire filters
+                filterButtons.forEach((btn) => {
+                    btn.addEventListener('click', () => setFilter(btn.dataset.filter || 'all'));
+                });
+
+                // Wire modal controls
+                closeBtns.forEach((btn) => btn.addEventListener('click', close));
+                prevBtn.addEventListener('click', () => step(-1));
+                nextBtn.addEventListener('click', () => step(1));
+
+                // Random
+                const openRandom = () => {
+                    const visible = getVisibleButtons();
+                    if (visible.length === 0) return;
+                    const pick = visible[Math.floor(Math.random() * visible.length)];
+                    const idx = items.indexOf(pick);
+                    openAt(idx);
+                };
+                randomBtn?.addEventListener('click', openRandom);
+
+                // Keyboard
+                document.addEventListener('keydown', (e) => {
+                    const isOpen = modal.getAttribute('aria-hidden') === 'false';
+
+                    // Random key works even when closed (unless typing)
+                    const typing = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName || '');
+                    if (!typing && (e.key === 'r' || e.key === 'R') && !e.metaKey && !e.ctrlKey && !e.altKey) {
+                        if (!isOpen) {
+                            const section = document.getElementById('portfolio');
+                            section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                        openRandom();
+                        e.preventDefault();
+                        return;
+                    }
+
+                    if (!isOpen) return;
+
+                    if (e.key === 'Escape') {
+                        close();
+                        e.preventDefault();
+                        return;
+                    }
+                    if (e.key === 'ArrowLeft') {
+                        step(-1);
+                        e.preventDefault();
+                        return;
+                    }
+                    if (e.key === 'ArrowRight') {
+                        step(1);
+                        e.preventDefault();
+                        return;
+                    }
+
+                    // Focus trap
+                    if (e.key === 'Tab') {
+                        const focusables = [prevBtn, nextBtn, ...(closeBtns.length ? [closeBtns[0]] : [])].filter(Boolean);
+                        if (focusables.length === 0) return;
+                        const active = document.activeElement;
+                        const i = focusables.indexOf(active);
+                        const nextI = e.shiftKey
+                            ? (i <= 0 ? focusables.length - 1 : i - 1)
+                            : (i === -1 || i >= focusables.length - 1 ? 0 : i + 1);
+                        focusables[nextI].focus({ preventScroll: true });
+                        e.preventDefault();
+                    }
+                });
+
+                // Initialize default filter
+                applyFilter(getActiveFilter());
+
+                return { openAt, close, setFilter };
+            })();
 
             // Scroll nativo — sem bibliotecas conflitando com ScrollTrigger
             // GSAP ticker integrado corretamente
@@ -1316,6 +1960,38 @@
                         }
                     }
                 );
+
+                // ════════════════════════════════════════════
+                // PORTFOLIO SECTION — ScrollTrigger Animations
+                // ════════════════════════════════════════════
+                gsap.fromTo('#portfolio .pf-reveal',
+                    { opacity: 0, y: 40, filter: 'blur(10px)' },
+                    {
+                        opacity: 1, y: 0, filter: 'blur(0px)',
+                        duration: 1, ease: 'power3.out',
+                        stagger: 0.08,
+                        scrollTrigger: {
+                            trigger: '#portfolio',
+                            start: 'top 78%',
+                        }
+                    }
+                );
+
+                gsap.fromTo('#portfolio .pf-card',
+                    { opacity: 0, y: 26, scale: 0.98 },
+                    {
+                        opacity: 1, y: 0, scale: 1,
+                        duration: 0.9, ease: 'power3.out',
+                        stagger: 0.06,
+                        scrollTrigger: {
+                            trigger: '#portfolio',
+                            start: 'top 70%',
+                        }
+                    }
+                );
+
+                // Subtle parallax on background flares
+                gsap.to('#portfolio .portfolio-shell::before', {});
 
                 // ════════════════════════════════════════════
                 // HABILIDADES SECTION — ScrollTrigger Animations
