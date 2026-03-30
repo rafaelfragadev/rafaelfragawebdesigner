@@ -45,7 +45,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
+
     <script src="https://unpkg.com/split-type"></script>
 
     <style>
@@ -88,6 +88,7 @@
             background-clip: text;
             -webkit-text-fill-color: transparent;
             color: transparent;
+            line-height: initial;
         }
 
         .bg-grid {
@@ -345,7 +346,7 @@
                     </div>
                     <div class="w-px h-10 bg-zinc-800"></div>
                     <div class="flex flex-col text-left">
-                        <span class="text-3xl font-display font-bold text-white mb-1">+50<span
+                        <span class="text-3xl font-display font-bold text-white mb-1">50<span
                                 class="text-brand">+</span></span>
                         <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Projetos
                             Entregues</span>
@@ -423,29 +424,281 @@
         </div>
     </section>
 
+    <!-- ════════════════════════════════════════════
+         SEGUNDA DOBRA — SOBRE
+    ════════════════════════════════════════════ -->
+    <section id="sobre" class="relative w-full py-24 md:py-36 overflow-hidden">
+
+        <!-- Ambient background for this section -->
+        <div class="absolute inset-0 bg-grid opacity-50 pointer-events-none"></div>
+        <div
+            class="about-ambient-left absolute top-1/2 -translate-y-1/2 -left-20 w-[500px] h-[500px] bg-brand-dark/20 rounded-full blur-[120px] pointer-events-none">
+        </div>
+        <div
+            class="about-ambient-right absolute top-1/4 -right-24 w-[350px] h-[350px] bg-brand/10 rounded-full blur-[100px] pointer-events-none">
+        </div>
+
+        <!-- Section Label -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 mb-16">
+            <div class="flex items-center gap-4 about-label">
+                <span class="w-1.5 h-1.5 bg-brand animate-pulse inline-block"></span>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-brand">Sobre o
+                    Designer</span>
+                <div class="flex-1 h-px bg-gradient-to-r from-zinc-800 to-transparent"></div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+            <!-- LEFT: Photo Block -->
+            <div class="relative flex justify-center lg:justify-start about-image-col">
+
+                <!-- Photo Card -->
+                <div class="about-photo-wrap relative w-full max-w-[380px] lg:max-w-none group cursor-default">
+
+                    <!-- Decorative lines -->
+                    <div
+                        class="about-deco-line absolute -top-6 left-0 w-px h-16 bg-gradient-to-b from-transparent via-brand to-transparent opacity-60">
+                    </div>
+                    <div
+                        class="about-deco-line absolute top-0 -left-6 h-px w-16 bg-gradient-to-r from-transparent via-brand to-transparent opacity-60">
+                    </div>
+                    <div
+                        class="about-deco-line absolute -bottom-6 right-12 w-px h-16 bg-gradient-to-b from-transparent via-brand to-transparent opacity-40">
+                    </div>
+
+                    <!-- Image container with border gradient effect -->
+                    <div class="relative overflow-hidden border border-zinc-800/80 group-hover:border-brand/30 transition-colors duration-700 shadow-[0_30px_80px_rgba(0,0,0,0.6)]"
+                        style="aspect-ratio: 4/5;">
+
+                        <!-- Corner accents -->
+                        <div
+                            class="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-brand z-20 transition-all duration-500 group-hover:w-5 group-hover:h-5">
+                        </div>
+                        <div
+                            class="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-brand z-20 transition-all duration-500 group-hover:w-5 group-hover:h-5">
+                        </div>
+                        <div
+                            class="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-brand z-20 transition-all duration-500 group-hover:w-5 group-hover:h-5">
+                        </div>
+                        <div
+                            class="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-brand z-20 transition-all duration-500 group-hover:w-5 group-hover:h-5">
+                        </div>
+
+                        <!-- The Photo -->
+                        <img src="assets/RafaelFraga2.jpg" alt="Rafael Fraga – Web Designer"
+                            class="w-full h-full object-cover object-center opacity-85 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-[1s] ease-out scale-105 group-hover:scale-100" />
+
+                        <!-- Gradient overlays -->
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/20 to-transparent opacity-70 z-10 pointer-events-none">
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-brand/8 mix-blend-overlay z-10 pointer-events-none opacity-60 group-hover:opacity-0 transition-opacity duration-700">
+                        </div>
+
+                        <!-- Floating badge on image -->
+                        <div class="absolute bottom-5 left-5 z-20 flex items-center gap-3 glass-panel border border-white/10 px-4 py-2.5
+                                    translate-y-3 opacity-0 about-badge transition-all duration-500">
+                            <div
+                                class="w-7 h-7 bg-brand/20 border border-brand/40 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="award" class="w-3.5 h-3.5 text-brand"></i>
+                            </div>
+                            <div>
+                                <div class="text-white text-[11px] font-bold font-mono leading-tight">~10 anos de XP
+                                </div>
+                                <div class="text-zinc-500 text-[9px] uppercase tracking-widest font-mono">Web Design
+                                    &amp; Branding</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side rotating label -->
+                    <div class="absolute -right-3 top-1/2 -translate-y-1/2 hidden lg:flex z-30">
+                        <div
+                            class="flex items-center gap-2 border border-zinc-800 bg-black/90 px-3 py-2 font-mono text-[9px] text-zinc-500 uppercase tracking-[0.25em] rotate-90 origin-center whitespace-nowrap">
+                            <span class="w-1 h-1 bg-brand animate-pulse inline-block rotate-[-90deg]"></span>
+                            Rafael Fraga • 2026
+                        </div>
+                    </div>
+
+                    <!-- Experience card floating bottom-right -->
+                    <div
+                        class="about-exp-card absolute -bottom-8 -right-4 lg:-right-10 border border-zinc-800 bg-black/95 p-4 flex flex-col gap-1 shadow-2xl z-30 min-w-[130px]">
+                        <span class="text-3xl font-display font-bold text-white leading-none">10<span
+                                class="text-brand">+</span></span>
+                        <span class="text-[9px] font-mono uppercase tracking-widest text-zinc-500 leading-tight">Anos
+                            de<br />Experiência</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Text Content -->
+            <div class="about-content-col flex flex-col gap-8">
+
+                <!-- Heading -->
+                <div class="overflow-hidden">
+                    <h2
+                        class="about-heading text-4xl sm:text-5xl lg:text-6xl font-display font-medium tracking-tighter text-white leading-[1.05]">
+                        Quem é
+                        <span class="neon-text text-glow block">Rafael Fraga?</span>
+                    </h2>
+                </div>
+
+                <!-- Bio paragraph -->
+                <div class="about-bio space-y-4 relative pl-4 border-l border-zinc-800">
+                    <div class="absolute top-0 left-0 w-px h-6 bg-brand"></div>
+                    <p class="text-zinc-300 font-sans text-base md:text-lg leading-relaxed">
+                        Designer com formação em <strong class="text-white font-semibold">Produção Multimídia pela
+                            FADERGS</strong> (2019) e
+                        Pós-Graduação em <strong class="text-white font-semibold">Direção de Artes</strong> (2023) —
+                        quase uma
+                        década transformando ideias em experiências visuais que comunicam, convertem e ficam na memória.
+                    </p>
+                    <p class="text-zinc-500 font-sans text-sm md:text-base leading-relaxed">
+                        Ao longo da carreira, atuou tanto como <em class="text-zinc-300 not-italic">freelancer</em>
+                        quanto em regime CLT para
+                        empresas do <strong class="text-zinc-300 font-medium">Brasil e do exterior</strong>, acumulando
+                        experiência
+                        multicultural e visão estratégica. Para Rafael, qualidade não é diferencial — é pré-requisito
+                        para um projeto que
+                        realmente funciona.
+                    </p>
+                </div>
+
+                <!-- Skills & Expertise columns -->
+                <div class="about-skills grid grid-cols-2 gap-6 pt-2">
+                    <!-- Skills -->
+                    <div>
+                        <p
+                            class="text-[10px] font-mono font-bold uppercase tracking-widest text-brand mb-4 flex items-center gap-2">
+                            <span class="w-3 h-px bg-brand inline-block"></span> Especialidades
+                        </p>
+                        <ul class="space-y-2.5">
+                            <li
+                                class="flex items-center gap-2 text-zinc-300 text-sm hover:text-white transition-colors group/li">
+                                <span
+                                    class="w-1 h-1 bg-brand/60 group-hover/li:bg-brand transition-colors flex-shrink-0"></span>
+                                Web Design
+                            </li>
+                            <li
+                                class="flex items-center gap-2 text-zinc-300 text-sm hover:text-white transition-colors group/li">
+                                <span
+                                    class="w-1 h-1 bg-brand/60 group-hover/li:bg-brand transition-colors flex-shrink-0"></span>
+                                UI / UX Design
+                            </li>
+                            <li
+                                class="flex items-center gap-2 text-zinc-300 text-sm hover:text-white transition-colors group/li">
+                                <span
+                                    class="w-1 h-1 bg-brand/60 group-hover/li:bg-brand transition-colors flex-shrink-0"></span>
+                                Front-End
+                            </li>
+                            <li
+                                class="flex items-center gap-2 text-zinc-300 text-sm hover:text-white transition-colors group/li">
+                                <span
+                                    class="w-1 h-1 bg-brand/60 group-hover/li:bg-brand transition-colors flex-shrink-0"></span>
+                                Direção de Arte
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Mercados -->
+                    <div>
+                        <p
+                            class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 mb-4 flex items-center gap-2">
+                            <span class="w-3 h-px bg-zinc-700 inline-block"></span> Mercados
+                        </p>
+                        <ul class="space-y-2.5">
+                            <li
+                                class="flex items-center gap-2 text-zinc-400 text-sm hover:text-white transition-colors group/li">
+                                <span
+                                    class="w-1 h-1 bg-zinc-700 group-hover/li:bg-zinc-400 transition-colors flex-shrink-0"></span>
+                                Freelance Global
+                            </li>
+                            <li
+                                class="flex items-center gap-2 text-zinc-400 text-sm hover:text-white transition-colors group/li">
+                                <span
+                                    class="w-1 h-1 bg-zinc-700 group-hover/li:bg-zinc-400 transition-colors flex-shrink-0"></span>
+                                Agências Criativas
+                            </li>
+                            <li
+                                class="flex items-center gap-2 text-zinc-400 text-sm hover:text-white transition-colors group/li">
+                                <span
+                                    class="w-1 h-1 bg-zinc-700 group-hover/li:bg-zinc-400 transition-colors flex-shrink-0"></span>
+                                Empresas Nacionais
+                            </li>
+                            <li
+                                class="flex items-center gap-2 text-zinc-400 text-sm hover:text-white transition-colors group/li">
+                                <span
+                                    class="w-1 h-1 bg-zinc-700 group-hover/li:bg-zinc-400 transition-colors flex-shrink-0"></span>
+                                Clientes Internacionais
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Metrics Row -->
+                <div class="about-metrics flex flex-wrap gap-px border border-zinc-800/70 mt-2">
+                    <div
+                        class="flex-1 min-w-[100px] flex flex-col gap-1 p-5 border-r border-zinc-800/70 bg-zinc-900/20 hover:bg-zinc-900/40 transition-colors">
+                        <span class="text-2xl font-display font-bold text-white">FADERGS</span>
+                        <span class="text-[9px] font-mono uppercase tracking-widest text-zinc-600">Produção
+                            Multimídia</span>
+                    </div>
+                    <div
+                        class="flex-1 min-w-[100px] flex flex-col gap-1 p-5 border-r border-zinc-800/70 bg-zinc-900/20 hover:bg-zinc-900/40 transition-colors">
+                        <span class="text-2xl font-display font-bold text-white">2023</span>
+                        <span class="text-[9px] font-mono uppercase tracking-widest text-zinc-600">Pós em Dir. de
+                            Arte</span>
+                    </div>
+                    <div
+                        class="flex-1 min-w-[100px] flex flex-col gap-1 p-5 bg-zinc-900/20 hover:bg-zinc-900/40 transition-colors">
+                        <span class="text-2xl font-display font-bold text-brand">50<span
+                                class="text-zinc-500 text-lg">+</span></span>
+                        <span class="text-[9px] font-mono uppercase tracking-widest text-zinc-600">Projetos
+                            Entregues</span>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="about-cta flex flex-col sm:flex-row gap-4 pt-2">
+                    <!-- Primary -->
+                    <a href="#portfolio" class="group relative flex items-center justify-center gap-3 h-[54px] px-8 min-w-[200px]
+                              bg-brand border border-brand text-white text-xs font-bold tracking-widest uppercase
+                              hover:bg-transparent hover:text-brand transition-all duration-300 overflow-hidden">
+                        <span class="relative z-10">Ver Portfólio</span>
+                        <i data-lucide="arrow-up-right"
+                            class="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+                        <span
+                            class="absolute inset-0 bg-brand/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+                    </a>
+                    <!-- Secondary -->
+                    <a href="#contato" class="group relative flex items-center justify-center gap-3 h-[54px] px-8 min-w-[200px]
+                              bg-transparent border border-zinc-700 hover:border-white text-white text-xs font-bold tracking-widest uppercase
+                              transition-colors duration-300">
+                        Falar Comigo
+                        <i data-lucide="message-circle"
+                            class="w-4 h-4 transition-transform duration-300 group-hover:rotate-6"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom divider -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 mt-20">
+            <div class="h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent"></div>
+        </div>
+    </section>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             // Initialize Icons
             lucide.createIcons();
 
-            // Setup Lenis for premium smooth scrolling
-            const lenis = new Lenis({
-                duration: 1.2,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                direction: 'vertical',
-                gestureDirection: 'vertical',
-                smooth: true,
-                mouseMultiplier: 1,
-                smoothTouch: false,
-                touchMultiplier: 2,
-                infinite: false,
-            });
-
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
+            // Scroll nativo — sem bibliotecas conflitando com ScrollTrigger
+            // GSAP ticker integrado corretamente
+            gsap.ticker.lagSmoothing(0);
 
             // GSAP Animations
             gsap.registerPlugin(ScrollTrigger);
@@ -507,26 +760,223 @@
                     repeat: -1
                 });
 
-                // Subtle Scroll Parallax
+                // Subtle Scroll Parallax — scrub: true = acompanha scroll sem lag
                 gsap.to('.marquee-wrapper', {
-                    yPercent: 20,
+                    yPercent: 10,
                     ease: "none",
                     scrollTrigger: {
                         trigger: "body",
                         start: "top top",
                         end: "bottom top",
-                        scrub: 1
+                        scrub: true
                     }
                 });
 
                 gsap.to('#hero-image', {
-                    y: -40,
+                    y: -25,
                     ease: "none",
                     scrollTrigger: {
                         trigger: "body",
                         start: "top top",
                         end: "bottom top",
-                        scrub: 1.5
+                        scrub: true
+                    }
+                });
+
+                // ════════════════════════════════════════════
+                // SOBRE SECTION — ScrollTrigger Animations
+                // ════════════════════════════════════════════
+
+                // Section label fade in
+                gsap.fromTo('.about-label',
+                    { opacity: 0, x: -30 },
+                    {
+                        opacity: 1, x: 0, duration: 0.8, ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: '#sobre',
+                            start: 'top 80%',
+                        }
+                    }
+                );
+
+                // Image column — slide in from left with blur
+                gsap.fromTo('.about-image-col',
+                    { opacity: 0, x: -80, filter: 'blur(12px)' },
+                    {
+                        opacity: 1, x: 0, filter: 'blur(0px)',
+                        duration: 1.2, ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: '#sobre',
+                            start: 'top 75%',
+                        }
+                    }
+                );
+
+                // Decorative lines stagger in
+                gsap.fromTo('.about-deco-line',
+                    { scaleY: 0, scaleX: 0, opacity: 0 },
+                    {
+                        scaleY: 1, scaleX: 1, opacity: 1,
+                        duration: 0.8, stagger: 0.15, ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: '#sobre',
+                            start: 'top 70%',
+                        }
+                    }
+                );
+
+                // Experience card — pop in from bottom right
+                gsap.fromTo('.about-exp-card',
+                    { opacity: 0, y: 30, scale: 0.85 },
+                    {
+                        opacity: 1, y: 0, scale: 1,
+                        duration: 0.9, ease: 'back.out(1.7)',
+                        delay: 0.4,
+                        scrollTrigger: {
+                            trigger: '#sobre',
+                            start: 'top 65%',
+                        }
+                    }
+                );
+
+                // Content column heading — clip reveal
+                gsap.fromTo('.about-heading',
+                    { y: 60, opacity: 0 },
+                    {
+                        y: 0, opacity: 1,
+                        duration: 1, ease: 'power4.out',
+                        scrollTrigger: {
+                            trigger: '.about-content-col',
+                            start: 'top 80%',
+                        }
+                    }
+                );
+
+                // Bio text
+                gsap.fromTo('.about-bio',
+                    { opacity: 0, y: 30 },
+                    {
+                        opacity: 1, y: 0,
+                        duration: 0.9, ease: 'power2.out',
+                        delay: 0.15,
+                        scrollTrigger: {
+                            trigger: '.about-content-col',
+                            start: 'top 75%',
+                        }
+                    }
+                );
+
+                // Skills grid — stagger items
+                gsap.fromTo('.about-skills',
+                    { opacity: 0, y: 25 },
+                    {
+                        opacity: 1, y: 0,
+                        duration: 0.8, ease: 'power2.out',
+                        delay: 0.25,
+                        scrollTrigger: {
+                            trigger: '.about-content-col',
+                            start: 'top 70%',
+                        }
+                    }
+                );
+
+                gsap.fromTo('.about-skills li',
+                    { opacity: 0, x: -15 },
+                    {
+                        opacity: 1, x: 0,
+                        stagger: 0.07, duration: 0.5, ease: 'power2.out',
+                        delay: 0.3,
+                        scrollTrigger: {
+                            trigger: '.about-skills',
+                            start: 'top 85%',
+                        }
+                    }
+                );
+
+                // Metrics bar
+                gsap.fromTo('.about-metrics',
+                    { opacity: 0, y: 20 },
+                    {
+                        opacity: 1, y: 0,
+                        duration: 0.8, ease: 'power2.out',
+                        delay: 0.1,
+                        scrollTrigger: {
+                            trigger: '.about-metrics',
+                            start: 'top 88%',
+                        }
+                    }
+                );
+
+                gsap.fromTo('.about-metrics > div',
+                    { opacity: 0, y: 15 },
+                    {
+                        opacity: 1, y: 0,
+                        stagger: 0.1, duration: 0.6, ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: '.about-metrics',
+                            start: 'top 85%',
+                        }
+                    }
+                );
+
+                // CTA buttons
+                gsap.fromTo('.about-cta',
+                    { opacity: 0, y: 20 },
+                    {
+                        opacity: 1, y: 0,
+                        duration: 0.8, ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: '.about-cta',
+                            start: 'top 92%',
+                        }
+                    }
+                );
+
+                // Floating badge inside photo — triggered on scroll
+                gsap.fromTo('.about-badge',
+                    { opacity: 0, y: 12 },
+                    {
+                        opacity: 1, y: 0,
+                        duration: 0.8, ease: 'power2.out',
+                        delay: 0.7,
+                        scrollTrigger: {
+                            trigger: '#sobre',
+                            start: 'top 65%',
+                        }
+                    }
+                );
+
+                // Parallax — scrub: true = sem lag, acompanha 1:1
+                gsap.to('.about-photo-wrap', {
+                    y: -20,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: '#sobre',
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: true
+                    }
+                });
+
+                gsap.to('.about-ambient-left', {
+                    y: -40,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: '#sobre',
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: true
+                    }
+                });
+
+                gsap.to('.about-ambient-right', {
+                    y: 25,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: '#sobre',
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: true
                     }
                 });
             });
