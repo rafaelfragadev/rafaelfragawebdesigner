@@ -1,0 +1,452 @@
+<!doctype html>
+<html class="dark" lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Creative DS - Custom Design System</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#FF333E',
+              dark: '#991F25',
+              bg: '#090909',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Manrope', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          animation: {
+            'fadeSlideIn': 'fadeSlideIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'float': 'float 6s ease-in-out infinite',
+            'spin-slow': 'spin 8s linear infinite',
+            'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeSlideIn: {
+              '0%': { opacity: '0', transform: 'translateY(30px)', filter: 'blur(8px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)', filter: 'blur(0)' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-15px)' }
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+              '50%': { opacity: '0.7', transform: 'scale(1.1)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      background-color: #090909;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    ::selection { background-color: rgba(255, 51, 62, 0.3); color: #fff; }
+
+    .font-display { font-family: 'Manrope', sans-serif; }
+
+    /* Glass Effect UI */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .glass-panel:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 51, 62, 0.4);
+      box-shadow: 0 8px 32px rgba(255, 51, 62, 0.1);
+    }
+
+    /* Complex Border Gradients */
+    .border-gradient { position: relative; border-radius: inherit; }
+    .border-gradient::before {
+      content: ""; position: absolute; inset: 0; padding: 1px;
+      border-radius: inherit;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      background: linear-gradient(135deg, rgba(255, 51, 62, 0.5), transparent 40%, rgba(255, 255, 255, 0.1));
+      pointer-events: none;
+    }
+
+    /* Typography Overlays */
+    .text-glow { text-shadow: 0 0 30px rgba(255, 51, 62, 0.6); }
+    .bg-clip-text { -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    .neon-text {
+      background: linear-gradient(to right, #ffffff, #FF333E);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Animation utility for scrolling */
+    .animate-on-scroll { opacity: 0; animation-play-state: paused; }
+    .animate-on-scroll.animate { animation: fadeSlideIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-play-state: running; }
+
+    /* Button effects - derived from design-system2 */
+    .btn-glow-effect { position: relative; z-index: 1; overflow: hidden; border-radius: 0; outline: none; }
+    .btn-glow-effect::before {
+      content: ''; position: absolute; inset: -2px; z-index: -1;
+      background: conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 75%, #FF333E 100%);
+      animation: spin 3s linear infinite; opacity: 0; transition: opacity 0.3s ease;
+    }
+    .btn-glow-effect:hover::before { opacity: 1; }
+    .btn-glow-effect::after {
+      content: ''; position: absolute; inset: 1px; z-index: -1;
+      background: #090909; border-radius: inherit; transition: background 0.3s;
+    }
+    .btn-glow-effect:hover::after { background: transparent; }
+
+    /* Dynamic Grid */
+    .bg-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    
+    /* Film Grain Noise for agency feel */
+    .bg-noise {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none; z-index: 9999; opacity: 0.02;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Fixed Top Gradient Navbar */
+    .gradient-blur { position: fixed; z-index: 45; inset: 0 0 auto 0; height: 120px; pointer-events: none; }
+    .gradient-blur::before {
+      content: ""; position: absolute; inset: 0; z-index: 1; backdrop-filter: blur(.5px);
+      mask: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 12.5%, rgba(0,0,0,1) 25%, rgba(0,0,0,0) 37.5%);
+    }
+    .gradient-blur > div { position: absolute; inset: 0; }
+    .gradient-blur > div:nth-of-type(1) { z-index: 2; backdrop-filter: blur(1px); mask: linear-gradient(to top, rgba(0,0,0,0) 12.5%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 37.5%, rgba(0,0,0,0) 50%); }
+    .gradient-blur > div:nth-of-type(2) { z-index: 3; backdrop-filter: blur(2px); mask: linear-gradient(to top, rgba(0,0,0,0) 25%, rgba(0,0,0,1) 37.5%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 62.5%); }
+    .gradient-blur > div:nth-of-type(3) { z-index: 4; backdrop-filter: blur(4px); mask: linear-gradient(to top, rgba(0,0,0,0) 37.5%, rgba(0,0,0,1) 50%, rgba(0,0,0,1) 62.5%, rgba(0,0,0,0) 75%); }
+    .gradient-blur > div:nth-of-type(4) { z-index: 5; backdrop-filter: blur(8px); mask: linear-gradient(to top, rgba(0,0,0,0) 50%, rgba(0,0,0,1) 62.5%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 87.5%); }
+    .gradient-blur > div:nth-of-type(5) { z-index: 6; backdrop-filter: blur(16px); mask: linear-gradient(to top, rgba(0,0,0,0) 62.5%, rgba(0,0,0,1) 75%, rgba(0,0,0,1) 87.5%, rgba(0,0,0,0) 100%); }
+    .gradient-blur > div:nth-of-type(6) { z-index: 7; backdrop-filter: blur(32px); mask: linear-gradient(to top, rgba(0,0,0,0) 75%, rgba(0,0,0,1) 87.5%, rgba(0,0,0,1) 100%); }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -5% 0px" });
+      document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
+      lucide.createIcons();
+    });
+  </script>
+</head>
+<body class="antialiased relative selection:bg-[#FF333E]/30 selection:text-white">
+  
+  <div class="bg-noise"></div>
+  
+  <!-- Global Ambient Flares -->
+  <div class="fixed top-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-[#991F25]/20 rounded-full blur-[120px] pointer-events-none z-[-1]"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-[#FF333E]/10 rounded-full blur-[100px] pointer-events-none z-[-1] animate-pulse-glow"></div>
+
+  <div class="gradient-blur">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+  </div>
+
+  <!-- Navbar -->
+  <div class="fixed w-full z-50 pt-6 px-4 top-0 left-0 flex justify-center animate-[fadeSlideIn_1s_ease-out_both] pointer-events-auto">
+    <nav class="w-full max-w-6xl glass-panel py-3 px-6 shadow-2xl flex items-center justify-between" style="border-radius: 0; border: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.4);">
+      <div class="flex items-center gap-3">
+        <!-- Logo Element Inspired by ai-social-automation + creative-agency -->
+        <div class="grid grid-cols-2 w-6 h-6 gap-1 opacity-90">
+          <div class="bg-[#FF333E] w-full h-full rounded-sm"></div>
+          <div class="bg-zinc-700 w-full h-full rounded-sm animate-pulse"></div>
+          <div class="bg-zinc-800 w-full h-full rounded-sm"></div>
+          <div class="bg-white w-full h-full rounded-sm shadow-[0_0_10px_rgba(255,255,255,0.3)]"></div>
+        </div>
+        <span class="text-xl font-display font-bold text-white tracking-tight">Onyx DS</span>
+      </div>
+      <div class="hidden md:flex items-center gap-8">
+        <a class="text-sm font-medium text-gray-400 hover:text-white transition-colors py-1 relative group" href="#hero">Overview <span class="absolute bottom-0 left-0 w-full h-[1px] bg-brand scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span></a>
+        <a class="text-sm font-medium text-gray-400 hover:text-white transition-colors py-1 relative group" href="#typography">Typography <span class="absolute bottom-0 left-0 w-full h-[1px] bg-brand scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span></a>
+        <a class="text-sm font-medium text-gray-400 hover:text-white transition-colors py-1 relative group" href="#colors">Colors <span class="absolute bottom-0 left-0 w-full h-[1px] bg-brand scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span></a>
+        <a class="text-sm font-medium text-gray-400 hover:text-white transition-colors py-1 relative group" href="#components">Components <span class="absolute bottom-0 left-0 w-full h-[1px] bg-brand scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span></a>
+      </div>
+      <a href="#components" class="hidden md:flex items-center gap-2 bg-[#FF333E] text-white px-5 py-2.5 rounded-none text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all border border-transparent hover:border-white shadow-[0_0_15px_rgba(255,51,62,0.4)]">
+        Get Started <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </nav>
+  </div>
+
+  <!-- HERO SECTION [Primeira Dobra] -->
+  <section id="hero" class="min-h-screen relative flex flex-col items-center justify-center pt-32 pb-24 overflow-hidden bg-grid w-full" style="mask-image: linear-gradient(180deg, transparent, black 0%, black 95%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, black 0%, black 95%, transparent);">
+    
+    <!-- Floating Graphics -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20 z-0">
+      <div class="w-[60vw] h-[60vw] border-[1px] border-dashed border-white/20 rounded-full animate-[spin-slow]"></div>
+      <div class="w-[40vw] h-[40vw] border-[1px] border-white/10 rounded-full absolute animate-[spin_10s_linear_infinite_reverse]"></div>
+    </div>
+
+    <!-- Center Content -->
+    <div class="z-10 text-center max-w-6xl w-full px-6 mx-auto relative mt-16 flex flex-col items-center">
+      
+      <!-- Top Tag -->
+      <div class="animate-on-scroll animate inline-flex items-center transition-transform hover:scale-105 cursor-pointer bg-gradient-to-br from-white/10 to-transparent border border-white/10 rounded-none mb-10 pt-1.5 pr-3 pb-1.5 pl-3 gap-x-2 shadow-lg backdrop-blur-sm group" style="animation-delay: 0.1s;">
+        <span class="flex h-1.5 w-1.5 rounded-full group-hover:animate-pulse bg-[#FF333E] shadow-[0_0_10px_rgba(255,51,62,0.8)]"></span>
+        <span class="text-[10px] font-bold tracking-widest uppercase text-gray-300 group-hover:text-white transition-colors">Sistema de Design Criativo</span>
+      </div>
+
+      <!-- Main Heading Lettering -->
+      <h1 class="animate-on-scroll animate flex flex-col items-center gap-y-2 leading-[1.05] text-5xl md:text-8xl lg:text-[100px] cursor-default font-display font-medium tracking-tighter mb-8" style="animation-delay: 0.3s;">
+        <span class="inline-block text-gray-400 opacity-60">Architectural</span>
+        <span class="inline-block text-white">Visual <span class="text-glow neon-text">Scale</span></span>
+      </h1>
+
+      <p class="animate-on-scroll animate leading-relaxed text-lg md:text-2xl font-display font-medium text-gray-400 max-w-3xl mx-auto mb-14" style="animation-delay: 0.5s;">
+        Explore a interface unificada, tokens, tipografia e os componentes dinâmicos que constroem nossa experiência viral e moderna.
+      </p>
+
+      <!-- Buttons from design-system2 -->
+      <div class="animate-on-scroll animate flex flex-col md:flex-row items-center justify-center gap-6" style="animation-delay: 0.7s;">
+        <!-- Primary Button with complex glow -->
+        <button class="group relative flex w-full md:w-auto min-w-[200px] h-[54px] items-center justify-center rounded-none px-6 outline-none cursor-pointer transition-transform active:scale-95" style="background-color: rgba(255, 255, 255, 0.05); border: none;">
+          <div class="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-700 group-hover:opacity-0" style="background: radial-gradient(15% 50% at 50% 100%, #FF333E 0%, transparent 100%); filter: blur(15px);"></div>
+          <div class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100" style="background: radial-gradient(60.6% 50% at 50% 100%, #991F25 0%, transparent 100%); filter: blur(20px);"></div>
+          <div class="pointer-events-none absolute inset-0 overflow-hidden rounded-none">
+            <div class="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style="background: conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #FF333E 100%);"></div>
+          </div>
+          <div class="absolute inset-[1px] rounded-none bg-black"></div>
+          <span class="relative z-20 flex items-center justify-center gap-2 text-xs font-bold text-white tracking-widest uppercase">
+            <span style="text-shadow: 0 1px 4px rgba(0,0,0,0.8);">Explorar Tokens</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"></i>
+          </span>
+        </button>
+
+        <!-- Secondary Button -->
+        <button class="group relative inline-flex w-full md:w-auto min-w-[200px] h-[54px] items-center justify-center overflow-hidden rounded-none outline-none cursor-pointer border border-white/10 hover:border-white transition-colors" style="background-color: transparent;">
+          <span class="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-10" style="background: radial-gradient(50% 50% at 50% 100%, rgba(255, 51, 62, 0.15) 0%, transparent 100%);"></span>
+          <span class="relative z-20 flex items-center justify-center gap-2 text-xs font-bold text-white tracking-widest uppercase">
+            <span>Visualizar UI</span>
+            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Interface Mockup Base (from creative agency layout rule) -->
+    <div class="flex flex-col lg:flex-row gap-6 w-full max-w-6xl mt-24 px-6 md:px-0 relative z-20">
+      <div class="flex-1 bg-black border border-zinc-800 border-dashed relative p-8 flex flex-col justify-between group hover:border-[#FF333E]/50 transition-all duration-500 rounded-none animate-on-scroll" style="animation-delay: 0.9s;">
+        <!-- Corners -->
+        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#FF333E]"></div>
+        <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#FF333E]"></div>
+        <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#FF333E]"></div>
+        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#FF333E]"></div>
+        
+        <div class="space-y-8">
+          <div class="flex items-center justify-between border-b border-zinc-800 pb-4 border-dashed">
+            <span class="font-mono text-[10px] text-[#FF333E] tracking-widest uppercase font-bold">[ System Status ]</span>
+            <div class="flex gap-1.5"><div class="w-1.5 h-1.5 bg-[#FF333E] animate-pulse rounded-none"></div><div class="w-1.5 h-1.5 bg-zinc-800 rounded-none"></div></div>
+          </div>
+          <div>
+            <h3 class="text-zinc-500 text-[10px] font-mono mb-2 uppercase tracking-wider">Components</h3>
+            <div class="flex items-baseline gap-2"><p class="text-6xl font-medium text-white font-display tracking-tighter">72<span class="text-2xl text-gray-500 font-light">+</span></p><span class="text-[#FF333E] text-xs font-mono">LIVE</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:flex-[1.8] min-h-[400px] md:min-h-[500px] border-zinc-800 border relative overflow-hidden group animate-on-scroll" style="animation-delay: 1.1s;">
+        <img alt="Design Cover" class="w-full h-full object-cover transition-all duration-700 mix-blend-normal group-hover:scale-105 opacity-80 group-hover:opacity-100 absolute inset-0 filter grayscale group-hover:grayscale-0" src="https://cdn.midjourney.com/6512533c-2ac4-41b3-b676-56e877226748/0_3.png?w=800&q=80"/>
+        <!-- Inner overlays and content -->
+        <div class="absolute inset-0 flex flex-col justify-between p-8 z-20">
+          <div class="flex justify-between items-start">
+            <div class="bg-black/90 backdrop-blur-md border border-white/10 p-5 shadow-2xl">
+              <div class="flex items-center gap-2 mb-2"><span class="w-1.5 h-1.5 bg-[#FF333E]"></span><p class="text-zinc-400 font-mono text-[10px] uppercase tracking-widest">Library</p></div>
+              <h3 class="text-white font-display text-2xl font-bold uppercase tracking-tight">Pattern Base</h3>
+            </div>
+            <button class="w-12 h-12 bg-[#FF333E] text-white flex items-center justify-center hover:bg-white hover:text-black transition-colors">
+              <i data-lucide="maximize-2" class="w-5 h-5"></i>
+            </button>
+          </div>
+          <div class="flex gap-0 border border-zinc-800 w-fit bg-black mt-auto">
+            <span class="px-5 py-2.5 border-r border-zinc-800 text-[10px] font-bold text-zinc-300 uppercase font-mono hover:text-[#FF333E] transition-colors cursor-default">Design UI</span>
+            <span class="px-5 py-2.5 bg-[#FF333E]/10 text-[10px] font-bold text-[#FF333E] uppercase font-mono cursor-default">Motion</span>
+          </div>
+        </div>
+        <!-- Decorative Red Line -->
+        <div class="absolute bottom-8 right-8 w-1 h-32 bg-gradient-to-b from-[#FF333E] to-transparent z-10 hidden md:block"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY SECTION -->
+  <section id="typography" class="w-full max-w-7xl mx-auto py-24 px-6 relative z-20">
+    <div class="flex items-center gap-4 mb-12 animate-on-scroll">
+      <span class="uppercase text-sm font-bold text-[#FF333E] tracking-widest font-mono">Typography</span>
+      <div class="flex-1 h-[1px] bg-gradient-to-r from-zinc-800 to-transparent"></div>
+    </div>
+
+    <div class="border border-zinc-800 animate-on-scroll">
+      <div class="grid grid-cols-12 border-b border-zinc-800 p-4 bg-zinc-900/40 text-xs uppercase tracking-widest text-[#FF333E] font-mono font-bold">
+        <div class="col-span-3">Style</div><div class="col-span-7">Preview</div><div class="col-span-2 text-right">Size</div>
+      </div>
+
+      <div class="grid grid-cols-12 border-b border-zinc-800 p-6 items-center hover:bg-white/[0.02] transition-colors">
+        <div class="col-span-12 md:col-span-3 text-zinc-400 font-mono text-sm mb-2 md:mb-0">Heading 1</div>
+        <div class="col-span-12 md:col-span-7"><h1 class="text-5xl md:text-7xl font-display font-medium tracking-tighter">Large Display</h1></div>
+        <div class="col-span-12 md:col-span-2 md:text-right text-zinc-600 text-xs font-mono mt-2 md:mt-0">72px / Manrope</div>
+      </div>
+
+      <div class="grid grid-cols-12 border-b border-zinc-800 p-6 items-center hover:bg-white/[0.02] transition-colors">
+        <div class="col-span-12 md:col-span-3 text-zinc-400 font-mono text-sm mb-2 md:mb-0">Heading 2</div>
+        <div class="col-span-12 md:col-span-7"><h2 class="text-3xl md:text-5xl font-display font-medium text-white tracking-tight">Secondary Title</h2></div>
+        <div class="col-span-12 md:col-span-2 md:text-right text-zinc-600 text-xs font-mono mt-2 md:mt-0">48px / Manrope</div>
+      </div>
+
+      <div class="grid grid-cols-12 border-b border-zinc-800 p-6 items-center hover:bg-white/[0.02] transition-colors">
+        <div class="col-span-12 md:col-span-3 text-zinc-400 font-mono text-sm mb-2 md:mb-0">Paragraph</div>
+        <div class="col-span-12 md:col-span-7"><p class="text-lg text-zinc-300 font-sans leading-relaxed max-w-lg">Used for rich body content, reading sections and paragraph elements that need strong legibility.</p></div>
+        <div class="col-span-12 md:col-span-2 md:text-right text-zinc-600 text-xs font-mono mt-2 md:mt-0">18px / Inter</div>
+      </div>
+
+      <div class="grid grid-cols-12 p-6 items-center hover:bg-white/[0.02] transition-colors">
+        <div class="col-span-12 md:col-span-3 text-zinc-400 font-mono text-sm mb-2 md:mb-0">Data / Mono</div>
+        <div class="col-span-12 md:col-span-7"><span class="text-xs text-brand font-mono font-bold tracking-[0.2em] uppercase bg-brand/10 px-3 py-1 border border-brand/20">System_token_42</span></div>
+        <div class="col-span-12 md:col-span-2 md:text-right text-zinc-600 text-xs font-mono mt-2 md:mt-0">12px / JetBrains</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLORS SECTION -->
+  <section id="colors" class="w-full max-w-7xl mx-auto py-24 px-6 relative z-20">
+    <div class="flex items-center gap-4 mb-12 animate-on-scroll">
+      <span class="uppercase text-sm font-bold text-[#FF333E] tracking-widest font-mono">Colors & Surfaces</span>
+      <div class="flex-1 h-[1px] bg-gradient-to-r from-zinc-800 to-transparent"></div>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="border border-zinc-800 p-6 bg-black flex flex-col group hoverEffect animate-on-scroll">
+        <div class="h-32 mb-6 w-full rounded-sm bg-[#FF333E] shadow-[0_0_20px_rgba(255,51,62,0.3)] group-hover:shadow-[0_0_30px_rgba(255,51,62,0.6)] transition-all"></div>
+        <div class="flex justify-between items-center text-sm">
+          <span class="font-display font-bold text-white tracking-wide">Highlight</span>
+          <span class="font-mono text-zinc-500">#FF333E</span>
+        </div>
+      </div>
+      <div class="border border-zinc-800 p-6 bg-black flex flex-col group animate-on-scroll" style="animation-delay: 0.1s;">
+        <div class="h-32 mb-6 w-full rounded-sm bg-[#991F25]"></div>
+        <div class="flex justify-between items-center text-sm">
+          <span class="font-display font-medium text-white tracking-wide">Support Red</span>
+          <span class="font-mono text-zinc-500">#991F25</span>
+        </div>
+      </div>
+      <div class="border border-zinc-800 p-6 bg-black flex flex-col group animate-on-scroll" style="animation-delay: 0.2s;">
+        <div class="h-32 mb-6 w-full rounded-sm border border-zinc-800 bg-[#090909]">
+           <div class="w-full h-full bg-grid opacity-30"></div>
+        </div>
+        <div class="flex justify-between items-center text-sm">
+          <span class="font-display font-medium text-white tracking-wide">Dark Base</span>
+          <span class="font-mono text-zinc-500">#090909</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS SECTION -->
+  <section id="components" class="w-full max-w-7xl mx-auto py-24 px-6 relative z-20">
+    <div class="flex items-center gap-4 mb-12 animate-on-scroll">
+      <span class="uppercase text-sm font-bold text-[#FF333E] tracking-widest font-mono">UI Elements</span>
+      <div class="flex-1 h-[1px] bg-gradient-to-r from-zinc-800 to-transparent"></div>
+    </div>
+
+    <!-- Interface Board -->
+    <div class="border border-zinc-800 flex flex-col lg:flex-row bg-[#050505] p-2 animate-on-scroll">
+      
+      <!-- Buttons Side -->
+      <div class="flex-1 p-8 grid gap-8 border-b lg:border-b-0 lg:border-r border-zinc-800 border-dashed">
+        <div>
+          <p class="font-mono text-[10px] text-zinc-500 uppercase tracking-widest mb-4">Button / Primary</p>
+          <button class="w-full bg-transparent border border-[#FF333E] text-[#FF333E] bg-[#FF333E] !text-white hover:bg-transparent hover:!text-[#FF333E] transition-colors uppercase text-xs font-bold tracking-widest py-4 flex items-center justify-center gap-3">
+            <span>Iniciar Processo</span>
+            <i data-lucide="zap" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] text-zinc-500 uppercase tracking-widest mb-4">Button / Outline</p>
+          <button class="w-full bg-transparent border border-zinc-700 hover:border-white text-white transition-colors uppercase text-xs font-bold tracking-widest py-4 flex items-center justify-center gap-3">
+            <span>Visualizar Dados</span>
+          </button>
+        </div>
+        <div>
+          <p class="font-mono text-[10px] text-zinc-500 uppercase tracking-widest mb-4">Input / Focus</p>
+          <div class="group relative">
+            <input type="text" placeholder="Endereço de Email" class="w-full bg-transparent border-b border-zinc-700 py-3 text-white placeholder-zinc-600 focus:border-[#FF333E] focus:outline-none transition-colors font-sans text-base">
+          </div>
+        </div>
+      </div>
+
+      <!-- Complex Component from ai-social -->
+      <div class="flex-[1.5] p-8 relative overflow-hidden flex flex-col justify-center">
+        <!-- background glow inside card -->
+        <div class="absolute -top-20 -right-20 w-64 h-64 bg-[#FF333E]/10 blur-[80px] rounded-full pointer-events-none"></div>
+        <p class="font-mono text-[10px] text-zinc-500 uppercase tracking-widest mb-8 relative z-10">Card / Metric Event</p>
+        
+        <div class="rounded-none border border-zinc-800 bg-[#0A0A0A] p-6 hover:border-[#FF333E]/40 transition-colors relative z-10 shadow-xl">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full border border-zinc-800 bg-zinc-900 flex items-center justify-center text-[#FF333E]">
+                <i data-lucide="trending-up" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <div class="text-base font-bold text-white">Análise de Performance</div>
+                <div class="text-xs text-zinc-500 font-sans mt-1">Velocidade em crescimento contínuo.</div>
+              </div>
+            </div>
+            <span class="text-[10px] bg-[#FF333E]/10 border border-[#FF333E]/30 text-[#FF333E] px-2 py-1 uppercase font-bold tracking-widest">
+              Live
+            </span>
+          </div>
+          
+          <div class="mt-8 bg-black border border-zinc-800 p-4 font-mono text-xs">
+            <div class="grid grid-cols-2 gap-y-3">
+              <div class="text-zinc-500">Impressões: <span class="text-white ml-2">2.4M</span></div>
+              <div class="text-zinc-500">Conversão: <span class="text-white ml-2">12.5%</span></div>
+              <div class="text-zinc-500">Score: <span class="text-[#FF333E] ml-2 font-bold">+840</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-zinc-900 bg-[#050505] relative z-20 mt-12 w-full">
+    <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2">
+        <div class="w-3 h-3 bg-[#FF333E]"></div>
+        <span class="font-display font-bold text-white tracking-widest uppercase text-sm">Onyx DS</span>
+      </div>
+      <p class="text-[10px] text-zinc-600 font-mono tracking-widest uppercase">Built with meticulous design logic.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

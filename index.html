@@ -1,0 +1,535 @@
+<!doctype html>
+<html class="dark" lang="pt-BR" style="scroll-behavior: smooth;">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Rafael Fraga | Expert Designer</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            DEFAULT: '#FF333E',
+                            dark: '#991F25',
+                            bg: '#090909',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Manrope', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'spin-slow': 'spin 8s linear infinite',
+                        'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+                            '50%': { opacity: '0.7', transform: 'scale(1.1)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+
+    <style>
+        body {
+            background-color: #090909;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background-color: rgba(255, 51, 62, 0.3);
+            color: #fff;
+        }
+
+        .font-display {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 51, 62, 0.4);
+            box-shadow: 0 8px 32px rgba(255, 51, 62, 0.1);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 30px rgba(255, 51, 62, 0.6);
+        }
+
+        .neon-text {
+            background: linear-gradient(to right, #ffffff, #FF333E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        .bg-noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.025;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .gradient-blur {
+            position: fixed;
+            z-index: 45;
+            inset: 0 0 auto 0;
+            height: 120px;
+            pointer-events: none;
+        }
+
+        .gradient-blur::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            backdrop-filter: blur(.5px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 12.5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 37.5%);
+        }
+
+        .gradient-blur>div {
+            position: absolute;
+            inset: 0;
+        }
+
+        .gradient-blur>div:nth-of-type(1) {
+            z-index: 2;
+            backdrop-filter: blur(1px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 37.5%, rgba(0, 0, 0, 0) 50%);
+        }
+
+        .gradient-blur>div:nth-of-type(2) {
+            z-index: 3;
+            backdrop-filter: blur(2px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 1) 37.5%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 62.5%);
+        }
+
+        .gradient-blur>div:nth-of-type(3) {
+            z-index: 4;
+            backdrop-filter: blur(4px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 37.5%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 62.5%, rgba(0, 0, 0, 0) 75%);
+        }
+
+        .gradient-blur>div:nth-of-type(4) {
+            z-index: 5;
+            backdrop-filter: blur(8px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 62.5%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 87.5%);
+        }
+
+        .gradient-blur>div:nth-of-type(5) {
+            z-index: 6;
+            backdrop-filter: blur(16px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 62.5%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        .gradient-blur>div:nth-of-type(6) {
+            z-index: 7;
+            backdrop-filter: blur(32px);
+            mask: linear-gradient(to top, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 1) 100%);
+        }
+
+        .char {
+            transform: translateY(115%);
+            transition: transform 0.5s;
+        }
+
+        .clip-text {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+            line-height: 1.1;
+        }
+
+        .gsap-reveal {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .marquee-wrapper {
+            position: absolute;
+            top: 15%;
+            left: -10%;
+            width: 120%;
+            transform: rotate(-2deg);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.03;
+            overflow: visible;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            font-size: 14vw;
+            font-weight: 800;
+            font-family: 'Manrope', sans-serif;
+            letter-spacing: -0.05em;
+            line-height: 1;
+        }
+
+        .hero-title-wrap {
+            display: block;
+            overflow: visible !important;
+            height: auto !important;
+            max-height: none !important;
+        }
+
+        .hero-title_margin {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            overflow: visible !important;
+            height: auto !important;
+            max-height: none !important;
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+            padding-bottom: 0.12em;
+        }
+
+        .hero-title .line {
+            display: block;
+            overflow: visible !important;
+            height: auto !important;
+            max-height: none !important;
+            padding-bottom: 0.08em;
+        }
+    </style>
+</head>
+
+<body class="antialiased relative selection:bg-brand/30 selection:text-white min-h-screen">
+
+    <div class="bg-noise"></div>
+
+    <!-- Ambient Flares -->
+    <div
+        class="fixed top-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-brand-dark/20 rounded-full blur-[120px] pointer-events-none z-[-1]">
+    </div>
+    <div
+        class="fixed bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-brand/10 rounded-full blur-[100px] pointer-events-none z-[-1] animate-pulse-glow">
+    </div>
+
+    <div class="gradient-blur">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <!-- Header / Nav -->
+    <header class="fixed w-full z-50 pt-6 px-4 md:px-8 top-0 left-0 flex justify-center pointer-events-auto gsap-reveal"
+        id="nav">
+        <nav
+            class="w-full max-w-7xl glass-panel py-4 px-6 md:px-8 flex items-center justify-between shadow-2xl rounded-none border-white/10 bg-black/40">
+            <div class="flex items-center gap-3">
+                <a href="http://"><img src="assets/logo.svg" alt="Logo" class="h-6 w-auto object-contain" /></a>
+            </div>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a class="text-xs font-bold font-mono tracking-widest uppercase text-gray-400 hover:text-white transition-colors py-1 relative group"
+                    href="#home">Home <span
+                        class="absolute bottom-0 left-0 w-full h-[1px] bg-brand scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span></a>
+                <a class="text-xs font-bold font-mono tracking-widest uppercase text-gray-400 hover:text-white transition-colors py-1 relative group"
+                    href="#sobre">Sobre <span
+                        class="absolute bottom-0 left-0 w-full h-[1px] bg-brand scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span></a>
+                <a class="text-xs font-bold font-mono tracking-widest uppercase text-gray-400 hover:text-white transition-colors py-1 relative group"
+                    href="#portfolio">Portfólio <span
+                        class="absolute bottom-0 left-0 w-full h-[1px] bg-brand scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span></a>
+                <a class="text-xs font-bold font-mono tracking-widest uppercase text-gray-400 hover:text-white transition-colors py-1 relative group"
+                    href="#contato">Contato <span
+                        class="absolute bottom-0 left-0 w-full h-[1px] bg-brand scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span></a>
+            </div>
+
+            <a href="#contato"
+                class="flex items-center gap-2 bg-transparent text-white px-5 py-2.5 rounded-none text-xs font-bold uppercase tracking-widest hover:bg-brand hover:text-white transition-all border border-brand/50 hover:border-brand shadow-[0_0_15px_rgba(255,51,62,0.1)] group">
+                Contato <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </a>
+        </nav>
+    </header>
+
+    <!-- MAIN HERO -->
+    <section id="home"
+        class="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden bg-grid w-full"
+        style="mask-image: linear-gradient(180deg, transparent, black 0%, black 95%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, black 0%, black 95%, transparent);">
+
+        <!-- Animated Background Text -->
+        <div class="marquee-wrapper">
+            <div class="marquee-content" id="marquee-text">
+                RAFAEL FRAGA • RAFAEL FRAGA • RAFAEL FRAGA • RAFAEL FRAGA • RAFAEL FRAGA •
+            </div>
+        </div>
+
+        <div
+            class="max-w-7xl mx-auto px-6 lg:px-12 w-full relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
+
+            <!-- Left Content: Texts & CTA -->
+            <div
+                class="flex-1 lg:max-w-[60%] flex flex-col items-center lg:items-start text-center lg:text-left mt-8 lg:mt-0">
+                <div class="inline-flex items-center gap-2 mb-8 bg-brand/10 border border-brand/20 px-3 py-1.5 gsap-reveal"
+                    id="hero-tag">
+                    <span class="w-1.5 h-1.5 rounded-none bg-brand animate-pulse"></span>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-brand">Disponível para
+                        Projetos</span>
+                </div>
+                <div class="hero-title-wrap">
+                    <h1 class="hero-title_margin text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4.5rem] font-display font-medium tracking-tighter mb-6 clip-text"
+                        id="hero-title .line">
+                        <span class="text-white block">Design que transforma</span>
+                        <span class="text-zinc-500 block">percepção<br>em <span
+                                class="text-brand">presença.</span></span>
+                    </h1>
+                </div>
+
+                <p class="text-base sm:text-lg md:text-xl text-zinc-400 font-sans leading-relaxed mb-10 max-w-lg lg:max-w-xl gsap-reveal"
+                    id="hero-desc">
+                    Crio sites, interfaces e experiências que unem estética, estratégia e clareza para
+                    resultados memoráveis.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto gsap-reveal" id="hero-cta">
+                    <button
+                        class="w-full sm:w-auto min-w-[200px] h-[54px] bg-brand border border-brand text-white text-xs font-bold tracking-widest uppercase transition-all hover:bg-transparent hover:text-brand flex items-center justify-center gap-3 relative overflow-hidden group">
+                        <span class="relative z-10">Ver Projetos</span>
+                        <i data-lucide="arrow-down-right"
+                            class="w-4 h-4 relative z-10 transition-transform group-hover:translate-x-1 group-hover:translate-y-1"></i>
+                    </button>
+
+                    <button
+                        class="w-full sm:w-auto min-w-[200px] h-[54px] bg-transparent border border-zinc-700 hover:border-white text-white transition-colors text-xs font-bold tracking-widest uppercase flex items-center justify-center gap-3 relative group">
+                        Sobre mim
+                        <span
+                            class="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                    </button>
+                </div>
+
+                <div class="mt-12 lg:mt-16 flex items-center justify-center lg:justify-start gap-8 sm:gap-12 gsap-reveal border-t border-zinc-800/50 pt-8 w-full max-w-lg lg:max-w-none"
+                    id="hero-stats">
+                    <div class="flex flex-col text-left">
+                        <span class="text-3xl font-display font-bold text-white mb-1">10<span
+                                class="text-brand">+</span></span>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Anos de XP</span>
+                    </div>
+                    <div class="w-px h-10 bg-zinc-800"></div>
+                    <div class="flex flex-col text-left">
+                        <span class="text-3xl font-display font-bold text-white mb-1">+50<span
+                                class="text-brand">+</span></span>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Projetos
+                            Entregues</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Content: Profile Photo -->
+            <div class="flex-1 w-full max-w-[300px] sm:max-w-[400px] lg:max-w-md relative flex justify-center mt-8 lg:mt-0 gsap-reveal"
+                id="hero-image">
+                <!-- Outer decorative border/glow -->
+                <div class="absolute inset-0 bg-brand/5 blur-[80px] rounded-full scale-110 z-0"></div>
+                <div class="absolute -top-4 -right-4 w-24 h-24 bg-brand/20 blur-[40px] z-0"></div>
+
+                <div
+                    class="relative z-10 glass-panel p-2 md:p-3 rounded-none border border-zinc-800/60 group w-full aspect-[4/5] overflow-hidden shadow-2xl shadow-black/50">
+                    <!-- Accent Corners -->
+                    <div
+                        class="absolute top-0 left-0 w-2 h-2 border-t border-l border-brand z-20 transition-all group-hover:w-4 group-hover:h-4 group-hover:border-2">
+                    </div>
+                    <div
+                        class="absolute top-0 right-0 w-2 h-2 border-t border-r border-brand z-20 transition-all group-hover:w-4 group-hover:h-4 group-hover:border-2">
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-brand z-20 transition-all group-hover:w-4 group-hover:h-4 group-hover:border-2">
+                    </div>
+                    <div
+                        class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-brand z-20 transition-all group-hover:w-4 group-hover:h-4 group-hover:border-2">
+                    </div>
+
+                    <div class="relative w-full h-full bg-[#050505] overflow-hidden">
+                        <img src="assets/RafaelFraga.jpeg" alt="Rafael Fraga"
+                            class="w-full h-full object-cover object-top opacity-80 filter grayscale mix-blend-lighten scale-105 transition-all duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-100 group-hover:grayscale-[0.2] group-hover:opacity-100" />
+
+                        <!-- Overlay gradients for integration -->
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-[#090909] via-transparent to-transparent opacity-90 z-10 pointer-events-none">
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-brand/10 mix-blend-overlay z-10 pointer-events-none transition-opacity duration-700 group-hover:opacity-0">
+                        </div>
+
+                        <!-- Floating Tech Stack or Info Badge -->
+                        <div
+                            class="absolute bottom-6 left-6 z-20 glass-panel border border-white/10 px-4 py-3 flex items-center gap-3 transform translate-y-4 opacity-0 transition-all duration-500 delay-100 group-hover:translate-y-0 group-hover:opacity-100">
+                            <div
+                                class="w-8 h-8 rounded-none border border-brand/40 bg-black flex items-center justify-center">
+                                <i data-lucide="pen-tool" class="w-4 h-4 text-brand"></i>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-white text-xs font-bold font-mono tracking-tight">Web
+                                    Designer</span>
+                                <span
+                                    class="text-zinc-500 text-[10px] uppercase font-mono tracking-widest mt-0.5">Brasil</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side decorative label -->
+                <div
+                    class="absolute -right-6 bottom-10 hidden lg:flex items-center gap-2 border border-zinc-800 bg-black px-4 py-2 z-20 font-mono text-[10px] text-zinc-400 uppercase tracking-widest rotate-90 origin-bottom-left group-hover:text-white transition-colors">
+                    <span class="w-1.5 h-1.5 bg-brand rounded-none animate-pulse"></span>
+                    Portfolio.2026
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-3 gsap-reveal z-20 opacity-60"
+            id="scroll-indicator">
+            <span class="text-[9px] font-mono uppercase tracking-[0.3em] text-zinc-500">Scroll</span>
+            <div class="w-px h-10 bg-gradient-to-b from-brand via-zinc-800 to-transparent"></div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initialize Icons
+            lucide.createIcons();
+
+            // Setup Lenis for premium smooth scrolling
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                mouseMultiplier: 1,
+                smoothTouch: false,
+                touchMultiplier: 2,
+                infinite: false,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+            const tl = gsap.timeline();
+
+            // Validate fonts loaded before splitting (best practice)
+            document.fonts.ready.then(() => {
+                // Split Text Animation
+                const text = new SplitType('#hero-title', { types: 'lines,words,chars' });
+
+                // Unhide elements once ready to animate
+                gsap.set('.gsap-reveal', { visibility: 'visible' });
+
+                tl.fromTo('#nav',
+                    { y: -30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }
+                )
+                    .fromTo('#hero-tag',
+                        { opacity: 0, y: 15 },
+                        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
+                        '-=0.8'
+                    )
+                    .fromTo(text.chars,
+                        { y: 100, opacity: 0 },
+                        { y: 0, opacity: 1, stagger: 0.015, duration: 1, ease: 'power4.out', clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)' },
+                        '-=0.4'
+                    )
+                    .fromTo('#hero-desc',
+                        { opacity: 0, y: 20 },
+                        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
+                        '-=0.6'
+                    )
+                    .fromTo('#hero-cta',
+                        { opacity: 0, y: 20 },
+                        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
+                        '-=0.6'
+                    )
+                    .fromTo('#hero-stats',
+                        { opacity: 0, x: -20 },
+                        { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out' },
+                        '-=0.6'
+                    )
+                    .fromTo('#hero-image',
+                        { opacity: 0, scale: 0.95, filter: 'blur(10px)' },
+                        { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.5, ease: 'power3.out' },
+                        '-=1.2'
+                    )
+                    .fromTo('#scroll-indicator',
+                        { opacity: 0, y: -20 },
+                        { opacity: 1, y: 1, duration: 1, ease: 'power2.out' },
+                        '-=1'
+                    );
+
+                // Continuous Marquee (CSS-like translation loop via GSAP)
+                gsap.to('.marquee-wrapper', {
+                    xPercent: -50,
+                    ease: 'none',
+                    duration: 35,
+                    repeat: -1
+                });
+
+                // Subtle Scroll Parallax
+                gsap.to('.marquee-wrapper', {
+                    yPercent: 20,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "body",
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: 1
+                    }
+                });
+
+                gsap.to('#hero-image', {
+                    y: -40,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "body",
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: 1.5
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
