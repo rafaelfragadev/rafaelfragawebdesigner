@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Rafael Fraga | Expert Designer</title>
+    <title>Rafael Fraga | Web Designer</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -226,6 +226,138 @@
             height: auto !important;
             max-height: none !important;
             padding-bottom: 0.08em;
+        }
+
+        /* ── Skills Carousel ── */
+        .skills-section {
+            background: #f5f5f5;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skills-section::before,
+        .skills-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 120px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .skills-section::before {
+            left: 0;
+            background: linear-gradient(to right, #f5f5f5, transparent);
+        }
+
+        .skills-section::after {
+            right: 0;
+            background: linear-gradient(to left, #f5f5f5, transparent);
+        }
+
+        .skills-track-wrapper {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .skills-track {
+            display: flex;
+            gap: 0;
+            width: max-content;
+            animation: skillsScroll 32s linear infinite;
+        }
+
+        .skills-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes skillsScroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .skill-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 32px 40px;
+            min-width: 150px;
+            border-right: 1px solid rgba(0, 0, 0, 0.07);
+            cursor: default;
+            transition: background 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+        .skill-item:hover {
+            background: rgba(255, 51, 62, 0.06);
+            transform: translateY(-4px);
+        }
+
+        .skill-item:hover .skill-icon-wrap {
+            border-color: rgba(255, 51, 62, 0.4);
+            box-shadow: 0 0 20px rgba(255, 51, 62, 0.15);
+        }
+
+        .skill-item:hover .skill-label {
+            color: #FF333E;
+        }
+
+        .skill-icon-wrap {
+            width: 64px;
+            height: 64px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-icon-wrap img,
+        .skill-icon-wrap svg {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .skill-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #555;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .skills-heading-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #FF333E;
+        }
+
+        .skills-heading-title {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: #0a0a0a;
+        }
+
+        .skills-divider {
+            height: 1px;
+            background: linear-gradient(to right, #FF333E, transparent);
         }
     </style>
 </head>
@@ -691,6 +823,261 @@
         </div>
     </section>
 
+    <!-- ════════════════════════════════════════════
+         TERCEIRA DOBRA — HABILIDADES
+    ════════════════════════════════════════════ -->
+    <section id="habilidades" class="skills-section w-full py-0">
+
+        <!-- Top header strip -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 pt-20 pb-12 skills-section-header">
+            <div class="flex items-center gap-4 mb-5">
+                <span class="w-1.5 h-1.5 bg-brand animate-pulse inline-block"></span>
+                <span class="skills-heading-label">Stack &amp; Ferramentas</span>
+                <div class="flex-1 skills-divider ml-2"></div>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <h2 class="skills-heading-title text-4xl sm:text-5xl lg:text-6xl">
+                    Minhas<br><span style="color:#FF333E;">Habilidades</span>
+                </h2>
+                <p style="font-family:'Inter',sans-serif;font-size:14px;color:#777;max-width:340px;line-height:1.6;">
+                    Domínio das principais ferramentas do mercado — do design ao código, da criação à inteligência
+                    artificial.
+                </p>
+            </div>
+        </div>
+
+        <!-- Divider line -->
+        <div class="skills-divider mx-0 mb-0"></div>
+
+        <!-- Carousel wrapper -->
+        <div class="skills-track-wrapper border-t border-b" style="border-color:rgba(0,0,0,0.08);">
+            <div class="skills-track" id="skillsTrack">
+
+                <!-- ── SET 1 ── -->
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
+                            alt="HTML5" width="36" height="36">
+                    </div>
+                    <span class="skill-label">HTML 5</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"
+                            alt="CSS3" width="36" height="36">
+                    </div>
+                    <span class="skill-label">CSS 3</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" fill="#F7DF1E" />
+                            <path
+                                d="M9.5 24.5l2.3-1.4c.45.8.86 1.47 1.84 1.47.94 0 1.53-.37 1.53-1.8V14h2.84v8.83c0 2.97-1.74 4.32-4.28 4.32-2.3 0-3.63-1.19-4.23-2.65zM19.2 24.18l2.3-1.33c.6 1 1.38 1.73 2.76 1.73 1.16 0 1.9-.58 1.9-1.38 0-.96-.76-1.3-2.04-1.86l-.7-.3c-2.02-.86-3.37-1.94-3.37-4.22 0-2.1 1.6-3.7 4.1-3.7 1.78 0 3.06.62 3.98 2.24l-2.18 1.4c-.48-.86-.99-1.2-1.8-1.2-.82 0-1.34.52-1.34 1.2 0 .84.52 1.18 1.73 1.7l.7.3c2.38 1.02 3.73 2.06 3.73 4.4 0 2.52-1.98 3.9-4.64 3.9-2.6 0-4.28-1.24-5.1-2.88z"
+                                fill="#323330" />
+                        </svg>
+                    </div>
+                    <span class="skill-label">JavaScript</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg"
+                            alt="WordPress" width="36" height="36"
+                            style="filter:invert(42%) sepia(82%) saturate(400%) hue-rotate(167deg);">
+                    </div>
+                    <span class="skill-label">WordPress</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg"
+                            alt="Figma" width="36" height="36">
+                    </div>
+                    <span class="skill-label">Figma</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" rx="6" fill="#001E36" />
+                            <path
+                                d="M8 22V10h4.5c1.1 0 2 .38 2.7 1.13.7.75 1.05 1.7 1.05 2.87 0 1.17-.35 2.13-1.05 2.87-.7.74-1.6 1.11-2.7 1.11H10.3V22H8zm2.3-6.3h1.95c.6 0 1.08-.18 1.42-.55.34-.37.52-.85.52-1.45s-.17-1.08-.52-1.45c-.34-.37-.82-.55-1.42-.55H10.3v4zM18.5 22.15c-.78 0-1.5-.14-2.14-.42l.52-1.7c.56.25 1.1.38 1.62.38.38 0 .67-.08.87-.25.2-.17.3-.38.3-.63 0-.26-.1-.48-.3-.66-.2-.18-.56-.38-1.08-.6-.63-.27-1.1-.6-1.4-1-.3-.4-.45-.87-.45-1.4 0-.7.25-1.27.75-1.72.5-.45 1.17-.67 2-.67.78 0 1.47.15 2.07.44l-.5 1.62c-.53-.26-1-.38-1.43-.38-.35 0-.62.07-.8.22-.18.15-.27.34-.27.58 0 .2.08.38.25.53.17.15.5.33.97.55.68.3 1.18.64 1.5 1.04.32.4.48.88.48 1.45 0 .76-.27 1.36-.8 1.82-.53.46-1.25.69-2.16.69z"
+                                fill="#31A8FF" />
+                        </svg>
+                    </div>
+                    <span class="skill-label">Photoshop</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" rx="6" fill="#330000" />
+                            <path
+                                d="M13.45 19.4H9.3l-.86 2.6H6l4.2-12h2.82l4.2 12h-2.5l-.27-.6zm-3.6-1.9h3.05L11.4 12.5l-1.55 5zM20 22V10h2.3v12H20z"
+                                fill="#FF9A00" />
+                        </svg>
+                    </div>
+                    <span class="skill-label">Illustrator</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aftereffects/aftereffects-original.svg"
+                            alt="After Effects" width="36" height="36">
+                    </div>
+                    <span class="skill-label">After Effects</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" rx="6" fill="#D97757" />
+                            <path
+                                d="M20.23 8.5H17.8l-5.6 15h2.5l1.35-3.72h5.42l1.35 3.72h2.5L20.23 8.5zm-3.42 9.08l1.95-5.38 1.95 5.38h-3.9zM9.5 8.5H7v15h2.5v-15z"
+                                fill="white" />
+                        </svg>
+                    </div>
+                    <span class="skill-label">Claude</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="geminiGrad1" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#4285F4" />
+                                    <stop offset="50%" stop-color="#9B72CB" />
+                                    <stop offset="100%" stop-color="#D96570" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M16 4C16 4 12 12 4 16C12 20 16 28 16 28C16 28 20 20 28 16C20 12 16 4 16 4Z"
+                                fill="url(#geminiGrad1)" />
+                        </svg>
+                    </div>
+                    <span class="skill-label">Gemini</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap" style="background:#10A37F;border-color:transparent;">
+                        <svg viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+                            <path
+                                d="M37.532 16.87a9.963 9.963 0 00-.856-8.184 10.078 10.078 0 00-10.855-4.835 9.964 9.964 0 00-6.650-3.053 10.079 10.079 0 00-9.614 6.977 9.967 9.967 0 00-6.664 4.834 10.08 10.08 0 001.24 11.817 9.965 9.965 0 00.856 8.185 10.079 10.079 0 0010.855 4.835 9.965 9.965 0 006.649 3.052 10.078 10.078 0 009.618-6.981 9.967 9.967 0 006.663-4.834 10.079 10.079 0 00-1.243-11.813zM22.498 37.886a7.474 7.474 0 01-4.799-1.735c.061-.033.168-.091.237-.134l7.964-4.6a1.294 1.294 0 00.655-1.134V19.054l3.366 1.944a.12.12 0 01.066.092v9.299a7.505 7.505 0 01-7.49 7.496zM6.392 31.006a7.471 7.471 0 01-.894-5.023c.06.036.162.099.237.141l7.964 4.6a1.297 1.297 0 001.308 0l9.724-5.614v3.888a.12.12 0 01-.048.103L16.045 33.5a7.504 7.504 0 01-9.653-2.494zM4.297 13.62A7.469 7.469 0 018.2 10.333c0 .068-.004.19-.004.274v9.201a1.294 1.294 0 00.654 1.132l9.723 5.614-3.366 1.944a.12.12 0 01-.114.012L7.044 23.86a7.504 7.504 0 01-2.747-10.24zm27.658 6.437l-9.724-5.615 3.367-1.943a.121.121 0 01.114-.012l8.048 4.648a7.498 7.498 0 01-1.158 13.528v-9.476a1.293 1.293 0 00-.647-1.13zm3.35-5.043c-.059-.037-.162-.099-.236-.141l-7.965-4.6a1.298 1.298 0 00-1.308 0l-9.723 5.614v-3.888a.12.12 0 01.048-.103l8.048-4.645a7.497 7.497 0 0111.135 7.763zm-21.063 6.929l-3.367-1.944a.12.12 0 01-.065-.092v-9.299a7.497 7.497 0 0112.293-5.756 6.94 6.94 0 00-.236.134l-7.965 4.6a1.294 1.294 0 00-.654 1.132l-.006 11.225zm1.829-3.943l4.33-2.501 4.332 2.5v4.999l-4.331 2.5-4.331-2.5V18z"
+                                fill="white" />
+                        </svg>
+                    </div>
+                    <span class="skill-label">ChatGPT</span>
+                </div>
+
+                <!-- ── SET 2 (clone p/ loop infinito) ── -->
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
+                            alt="HTML5" width="36" height="36">
+                    </div>
+                    <span class="skill-label">HTML 5</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"
+                            alt="CSS3" width="36" height="36">
+                    </div>
+                    <span class="skill-label">CSS 3</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" fill="#F7DF1E" />
+                            <path
+                                d="M9.5 24.5l2.3-1.4c.45.8.86 1.47 1.84 1.47.94 0 1.53-.37 1.53-1.8V14h2.84v8.83c0 2.97-1.74 4.32-4.28 4.32-2.3 0-3.63-1.19-4.23-2.65zM19.2 24.18l2.3-1.33c.6 1 1.38 1.73 2.76 1.73 1.16 0 1.9-.58 1.9-1.38 0-.96-.76-1.3-2.04-1.86l-.7-.3c-2.02-.86-3.37-1.94-3.37-4.22 0-2.1 1.6-3.7 4.1-3.7 1.78 0 3.06.62 3.98 2.24l-2.18 1.4c-.48-.86-.99-1.2-1.8-1.2-.82 0-1.34.52-1.34 1.2 0 .84.52 1.18 1.73 1.7l.7.3c2.38 1.02 3.73 2.06 3.73 4.4 0 2.52-1.98 3.9-4.64 3.9-2.6 0-4.28-1.24-5.1-2.88z"
+                                fill="#323330" />
+                        </svg>
+                    </div>
+                    <span class="skill-label">JavaScript</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg"
+                            alt="WordPress" width="36" height="36"
+                            style="filter:invert(42%) sepia(82%) saturate(400%) hue-rotate(167deg);">
+                    </div>
+                    <span class="skill-label">WordPress</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg"
+                            alt="Figma" width="36" height="36">
+                    </div>
+                    <span class="skill-label">Figma</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <img src="../assets/icons/photoshop.svg" alt="Photoshop" width="36" height="36">
+                    </div>
+                    <span class="skill-label">Photoshop</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <img src="../assets/icons/illustrator.svg" alt="Illustrator" width="36" height="36">
+                    </div>
+                    <span class="skill-label">Illustrator</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <img src="../assets/icons/after-effects.svg" alt="After Effects" width="36" height="36">
+                    </div>
+                    <span class="skill-label">After Effects</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" rx="6" fill="#D97757" />
+                            <path
+                                d="M20.23 8.5H17.8l-5.6 15h2.5l1.35-3.72h5.42l1.35 3.72h2.5L20.23 8.5zm-3.42 9.08l1.95-5.38 1.95 5.38h-3.9zM9.5 8.5H7v15h2.5v-15z"
+                                fill="white" />
+                        </svg>
+                    </div>
+                    <span class="skill-label">Claude</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap">
+                        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="geminiGrad2" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#4285F4" />
+                                    <stop offset="50%" stop-color="#9B72CB" />
+                                    <stop offset="100%" stop-color="#D96570" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M16 4C16 4 12 12 4 16C12 20 16 28 16 28C16 28 20 20 28 16C20 12 16 4 16 4Z"
+                                fill="url(#geminiGrad2)" />
+                        </svg>
+                    </div>
+                    <span class="skill-label">Gemini</span>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-icon-wrap" style="background:#10A37F;border-color:transparent;">
+                        <svg viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+                            <path
+                                d="M37.532 16.87a9.963 9.963 0 00-.856-8.184 10.078 10.078 0 00-10.855-4.835 9.964 9.964 0 00-6.650-3.053 10.079 10.079 0 00-9.614 6.977 9.967 9.967 0 00-6.664 4.834 10.08 10.08 0 001.24 11.817 9.965 9.965 0 00.856 8.185 10.079 10.079 0 0010.855 4.835 9.965 9.965 0 006.649 3.052 10.078 10.078 0 009.618-6.981 9.967 9.967 0 006.663-4.834 10.079 10.079 0 00-1.243-11.813zM22.498 37.886a7.474 7.474 0 01-4.799-1.735c.061-.033.168-.091.237-.134l7.964-4.6a1.294 1.294 0 00.655-1.134V19.054l3.366 1.944a.12.12 0 01.066.092v9.299a7.505 7.505 0 01-7.49 7.496zM6.392 31.006a7.471 7.471 0 01-.894-5.023c.06.036.162.099.237.141l7.964 4.6a1.297 1.297 0 001.308 0l9.724-5.614v3.888a.12.12 0 01-.048.103L16.045 33.5a7.504 7.504 0 01-9.653-2.494zM4.297 13.62A7.469 7.469 0 018.2 10.333c0 .068-.004.19-.004.274v9.201a1.294 1.294 0 00.654 1.132l9.723 5.614-3.366 1.944a.12.12 0 01-.114.012L7.044 23.86a7.504 7.504 0 01-2.747-10.24zm27.658 6.437l-9.724-5.615 3.367-1.943a.121.121 0 01.114-.012l8.048 4.648a7.498 7.498 0 01-1.158 13.528v-9.476a1.293 1.293 0 00-.647-1.13zm3.35-5.043c-.059-.037-.162-.099-.236-.141l-7.965-4.6a1.298 1.298 0 00-1.308 0l-9.723 5.614v-3.888a.12.12 0 01.048-.103l8.048-4.645a7.497 7.497 0 0111.135 7.763zm-21.063 6.929l-3.367-1.944a.12.12 0 01-.065-.092v-9.299a7.497 7.497 0 0112.293-5.756 6.94 6.94 0 00-.236.134l-7.965 4.6a1.294 1.294 0 00-.654 1.132l-.006 11.225zm1.829-3.943l4.33-2.501 4.332 2.5v4.999l-4.331 2.5-4.331-2.5V18z"
+                                fill="white" />
+                        </svg>
+                    </div>
+                    <span class="skill-label">ChatGPT</span>
+                </div>
+
+            </div><!-- /skills-track -->
+        </div><!-- /skills-track-wrapper -->
+
+        <!-- Bottom strip -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 pt-8 pb-12 flex items-center justify-between">
+            <span
+                style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;">
+                11 ferramentas dominadas
+            </span>
+            <div style="display:flex;align-items:center;gap:6px;">
+                <span
+                    style="width:6px;height:6px;background:#FF333E;display:inline-block;animation:pulse 2s ease-in-out infinite;"></span>
+                <span
+                    style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#FF333E;">Em
+                    constante evolução</span>
+            </div>
+        </div>
+
+    </section>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             // Initialize Icons
@@ -942,6 +1329,21 @@
                         scrollTrigger: {
                             trigger: '#sobre',
                             start: 'top 65%',
+                        }
+                    }
+                );
+
+                // ════════════════════════════════════════════
+                // HABILIDADES SECTION — ScrollTrigger Animations
+                // ════════════════════════════════════════════
+                gsap.fromTo('.skills-section-header',
+                    { opacity: 0, y: 40 },
+                    {
+                        opacity: 1, y: 0,
+                        duration: 1, ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: '#habilidades',
+                            start: 'top 80%',
                         }
                     }
                 );
