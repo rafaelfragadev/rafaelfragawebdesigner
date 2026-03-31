@@ -359,6 +359,177 @@
             height: 1px;
             background: linear-gradient(to right, #FF333E, transparent);
         }
+
+        /* ── Portfolio Section ── */
+        .portfolio-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: #0a0a0a;
+            cursor: pointer;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .portfolio-card:hover {
+            border-color: rgba(255, 51, 62, 0.4);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 51, 62, 0.08);
+            transform: translateY(-6px);
+        }
+        .portfolio-card .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease, opacity 0.6s ease;
+            filter: grayscale(0.6) brightness(0.7);
+            opacity: 0.85;
+        }
+        .portfolio-card:hover .card-image {
+            transform: scale(1.06);
+            filter: grayscale(0) brightness(0.95);
+            opacity: 1;
+        }
+        .portfolio-card .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(9, 9, 9, 0.95) 0%, rgba(9, 9, 9, 0.4) 40%, transparent 70%);
+            z-index: 10;
+            transition: background 0.6s ease;
+        }
+        .portfolio-card:hover .card-overlay {
+            background: linear-gradient(to top, rgba(9, 9, 9, 0.9) 0%, rgba(9, 9, 9, 0.2) 30%, transparent 60%);
+        }
+        .portfolio-card .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 20;
+            padding: 28px;
+            transform: translateY(8px);
+            opacity: 0.85;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+        }
+        .portfolio-card:hover .card-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .portfolio-card .card-cta {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.4s ease 0.1s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+        }
+        .portfolio-card:hover .card-cta {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .portfolio-card .card-corner {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-color: #FF333E;
+            z-index: 25;
+            opacity: 0;
+            transition: opacity 0.4s ease, width 0.4s ease, height 0.4s ease;
+        }
+        .portfolio-card:hover .card-corner {
+            opacity: 1;
+            width: 14px;
+            height: 14px;
+        }
+        .portfolio-card .card-number {
+            position: absolute;
+            top: 20px;
+            left: 24px;
+            z-index: 20;
+            font-family: 'Manrope', sans-serif;
+            font-size: 64px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.03);
+            line-height: 1;
+            transition: color 0.5s ease;
+            pointer-events: none;
+        }
+        .portfolio-card:hover .card-number {
+            color: rgba(255, 51, 62, 0.08);
+        }
+
+        .portfolio-filter-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #777;
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .portfolio-filter-btn:hover,
+        .portfolio-filter-btn.active {
+            color: #FF333E;
+            border-color: rgba(255, 51, 62, 0.4);
+            background: rgba(255, 51, 62, 0.05);
+        }
+
+        /* Lightbox Modal */
+        .portfolio-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .portfolio-lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .portfolio-lightbox .lightbox-content {
+            max-width: 1200px;
+            width: 95%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transform: scale(0.95) translateY(20px);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .portfolio-lightbox.active .lightbox-content {
+            transform: scale(1) translateY(0);
+        }
+        .portfolio-lightbox .lightbox-image {
+            width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .portfolio-lightbox .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s;
+            z-index: 10;
+        }
+        .portfolio-lightbox .lightbox-close:hover {
+            background: #FF333E;
+            border-color: #FF333E;
+        }
     </style>
 </head>
 
@@ -1062,6 +1233,224 @@
 
     </section>
 
+    <!-- ════════════════════════════════════════════
+         QUARTA DOBRA — PORTFÓLIO
+    ════════════════════════════════════════════ -->
+    <section id="portfolio" class="relative w-full py-24 md:py-36 overflow-hidden">
+
+        <!-- Ambient backgrounds -->
+        <div class="absolute inset-0 bg-grid opacity-30 pointer-events-none"></div>
+        <div class="portfolio-ambient-left absolute top-1/3 -left-32 w-[500px] h-[500px] bg-brand-dark/15 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="portfolio-ambient-right absolute bottom-1/4 -right-24 w-[400px] h-[400px] bg-brand/8 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <!-- Section Header -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 mb-16">
+            <div class="flex items-center gap-4 portfolio-label">
+                <span class="w-1.5 h-1.5 bg-brand animate-pulse inline-block"></span>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-brand">Portfólio</span>
+                <div class="flex-1 h-px bg-gradient-to-r from-zinc-800 to-transparent"></div>
+            </div>
+        </div>
+
+        <!-- Heading & Description -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 mb-16">
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+                <div class="portfolio-heading">
+                    <h2 class="text-4xl sm:text-5xl lg:text-7xl font-display font-medium tracking-tighter text-white leading-[1.05]">
+                        Projetos que
+                        <span class="neon-text text-glow block">contam histórias.</span>
+                    </h2>
+                </div>
+                <div class="portfolio-desc max-w-md">
+                    <p class="text-zinc-400 font-sans text-base md:text-lg leading-relaxed">
+                        Cada projeto é uma oportunidade de criar algo único — da concepção ao pixel final, sempre com foco em impacto visual e resultado real.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 mb-12 portfolio-filters">
+            <div class="flex flex-wrap items-center gap-3">
+                <button class="portfolio-filter-btn active" data-filter="all">Todos</button>
+                <button class="portfolio-filter-btn" data-filter="website">Website</button>
+                <button class="portfolio-filter-btn" data-filter="saas">SaaS</button>
+                <button class="portfolio-filter-btn" data-filter="landing">Landing Page</button>
+                <div class="ml-auto hidden md:flex items-center gap-2">
+                    <span class="w-1 h-1 bg-brand animate-pulse"></span>
+                    <span class="text-[9px] font-mono uppercase tracking-widest text-zinc-500">3 Projetos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Grid -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6" id="portfolio-grid">
+
+                <!-- PROJECT 1 — Thiago Lourenço (large card) -->
+                <div class="portfolio-card lg:col-span-7 group" data-category="website" style="aspect-ratio: 16/10;" onclick="openLightbox(0)">
+                    <div class="card-corner top-0 left-0 border-t-2 border-l-2"></div>
+                    <div class="card-corner top-0 right-0 border-t-2 border-r-2"></div>
+                    <div class="card-corner bottom-0 left-0 border-b-2 border-l-2"></div>
+                    <div class="card-corner bottom-0 right-0 border-b-2 border-r-2"></div>
+                    <span class="card-number">01</span>
+                    <img src="assets/sites/thiagolourenco.png" alt="Thiago Lourenço — Webflow Expert" class="card-image absolute inset-0" loading="lazy" />
+                    <div class="card-overlay"></div>
+                    <div class="card-content">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-[9px] font-mono font-bold uppercase tracking-widest text-brand bg-brand/10 border border-brand/20 px-2 py-0.5">Website</span>
+                            <span class="text-[9px] font-mono uppercase tracking-widest text-zinc-600">Webflow</span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-display font-bold text-white tracking-tight mb-2">Thiago Lourenço</h3>
+                        <p class="text-sm text-zinc-400 font-sans leading-relaxed max-w-md mb-4">Portfólio pessoal de um Webflow Expert — foco em estética, funcionalidade e performance com animações elaboradas e tipografia impactante.</p>
+                        <div class="card-cta flex items-center gap-4">
+                            <span class="inline-flex items-center gap-2 text-xs font-bold text-brand uppercase tracking-widest group-hover:gap-3 transition-all">
+                                Ver Projeto <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                            </span>
+                            <a href="assets/thiagolourenco/index.html" target="_blank" class="text-[10px] font-mono text-zinc-600 hover:text-white transition-colors uppercase tracking-widest underline underline-offset-4" onclick="event.stopPropagation()">Abrir Site</a>
+                        </div>
+                    </div>
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-brand/5 blur-[80px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0"></div>
+                </div>
+
+                <!-- PROJECT 2 — AI Social Automation -->
+                <div class="portfolio-card lg:col-span-5 group" data-category="saas" style="aspect-ratio: 16/10;" onclick="openLightbox(1)">
+                    <div class="card-corner top-0 left-0 border-t-2 border-l-2"></div>
+                    <div class="card-corner top-0 right-0 border-t-2 border-r-2"></div>
+                    <div class="card-corner bottom-0 left-0 border-b-2 border-l-2"></div>
+                    <div class="card-corner bottom-0 right-0 border-b-2 border-r-2"></div>
+                    <span class="card-number">02</span>
+                    <img src="assets/sites/ai-social-automation.png" alt="Luminous — AI Social Automation" class="card-image absolute inset-0" loading="lazy" />
+                    <div class="card-overlay"></div>
+                    <div class="card-content">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-[9px] font-mono font-bold uppercase tracking-widest text-brand bg-brand/10 border border-brand/20 px-2 py-0.5">SaaS</span>
+                            <span class="text-[9px] font-mono uppercase tracking-widest text-zinc-600">AI Platform</span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-display font-bold text-white tracking-tight mb-2">Luminous — AI Social</h3>
+                        <p class="text-sm text-zinc-400 font-sans leading-relaxed max-w-md mb-4">Plataforma de automação social com IA — dashboard interativo, métricas em tempo real e design dark premium.</p>
+                        <div class="card-cta flex items-center gap-4">
+                            <span class="inline-flex items-center gap-2 text-xs font-bold text-brand uppercase tracking-widest group-hover:gap-3 transition-all">
+                                Ver Projeto <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                            </span>
+                            <a href="assets/ai-social-automation.aura.build/index.html" target="_blank" class="text-[10px] font-mono text-zinc-600 hover:text-white transition-colors uppercase tracking-widest underline underline-offset-4" onclick="event.stopPropagation()">Abrir Site</a>
+                        </div>
+                    </div>
+                    <div class="absolute top-0 left-0 w-48 h-48 bg-orange-500/5 blur-[60px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0"></div>
+                </div>
+
+                <!-- PROJECT 3 — Creative Agency (full width cinematic) -->
+                <div class="portfolio-card lg:col-span-12 group" data-category="landing" style="aspect-ratio: 21/9;" onclick="openLightbox(2)">
+                    <div class="card-corner top-0 left-0 border-t-2 border-l-2"></div>
+                    <div class="card-corner top-0 right-0 border-t-2 border-r-2"></div>
+                    <div class="card-corner bottom-0 left-0 border-b-2 border-l-2"></div>
+                    <div class="card-corner bottom-0 right-0 border-b-2 border-r-2"></div>
+                    <span class="card-number">03</span>
+                    <img src="assets/sites/creative-agency.png" alt="Creative Agency — Digital Designer & Developer" class="card-image absolute inset-0" loading="lazy" />
+                    <div class="card-overlay"></div>
+                    <div class="card-content">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-[9px] font-mono font-bold uppercase tracking-widest text-brand bg-brand/10 border border-brand/20 px-2 py-0.5">Landing Page</span>
+                            <span class="text-[9px] font-mono uppercase tracking-widest text-zinc-600">Agência Criativa</span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-display font-bold text-white tracking-tight mb-2">Creative Agency Template</h3>
+                        <p class="text-sm text-zinc-400 font-sans leading-relaxed max-w-lg mb-4">Template premium para agências digitais — design ousado com tipografia expressiva, animações on-scroll e componentes modulares de alta conversão.</p>
+                        <div class="card-cta flex items-center gap-4">
+                            <span class="inline-flex items-center gap-2 text-xs font-bold text-brand uppercase tracking-widest group-hover:gap-3 transition-all">
+                                Ver Projeto <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                            </span>
+                            <a href="assets/creative-agency-template.aura.build/index.html" target="_blank" class="text-[10px] font-mono text-zinc-600 hover:text-white transition-colors uppercase tracking-widest underline underline-offset-4" onclick="event.stopPropagation()">Abrir Site</a>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-96 h-48 bg-brand/5 blur-[100px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 mt-16">
+            <div class="portfolio-stats flex flex-wrap gap-px border border-zinc-800/70">
+                <div class="flex-1 min-w-[140px] flex flex-col gap-1 p-5 border-r border-zinc-800/70 bg-zinc-900/20 hover:bg-zinc-900/40 transition-colors group/stat">
+                    <span class="text-3xl font-display font-bold text-white group-hover/stat:text-brand transition-colors">3</span>
+                    <span class="text-[9px] font-mono uppercase tracking-widest text-zinc-600">Projetos em Destaque</span>
+                </div>
+                <div class="flex-1 min-w-[140px] flex flex-col gap-1 p-5 border-r border-zinc-800/70 bg-zinc-900/20 hover:bg-zinc-900/40 transition-colors group/stat">
+                    <span class="text-3xl font-display font-bold text-white group-hover/stat:text-brand transition-colors">100<span class="text-zinc-500 text-lg">%</span></span>
+                    <span class="text-[9px] font-mono uppercase tracking-widest text-zinc-600">Design Responsivo</span>
+                </div>
+                <div class="flex-1 min-w-[140px] flex flex-col gap-1 p-5 border-r border-zinc-800/70 bg-zinc-900/20 hover:bg-zinc-900/40 transition-colors group/stat">
+                    <span class="text-3xl font-display font-bold text-white group-hover/stat:text-brand transition-colors">A+</span>
+                    <span class="text-[9px] font-mono uppercase tracking-widest text-zinc-600">Qualidade Visual</span>
+                </div>
+                <div class="flex-1 min-w-[140px] flex flex-col gap-1 p-5 bg-zinc-900/20 hover:bg-zinc-900/40 transition-colors group/stat">
+                    <span class="text-3xl font-display font-bold text-brand">∞</span>
+                    <span class="text-[9px] font-mono uppercase tracking-widest text-zinc-600">Atenção ao Detalhe</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Row -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 mt-12 portfolio-cta">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border border-zinc-800/50 bg-zinc-900/10 p-6 md:p-8">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-brand/10 border border-brand/30 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-brand"></i>
+                    </div>
+                    <div>
+                        <p class="text-white font-display font-bold text-lg">Gostou do que viu?</p>
+                        <p class="text-zinc-500 text-sm font-sans">Vamos criar algo incrível juntos.</p>
+                    </div>
+                </div>
+                <a href="#contato" class="group relative flex items-center justify-center gap-3 h-[50px] px-8
+                    bg-brand border border-brand text-white text-xs font-bold tracking-widest uppercase
+                    hover:bg-transparent hover:text-brand transition-all duration-300 overflow-hidden whitespace-nowrap">
+                    <span class="relative z-10">Iniciar Projeto</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Bottom divider -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 mt-20">
+            <div class="h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="portfolio-lightbox" id="portfolio-lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <div class="lightbox-content">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h3 class="text-white font-display font-bold text-2xl tracking-tight" id="lightbox-title"></h3>
+                    <p class="text-zinc-500 text-sm font-sans mt-1" id="lightbox-desc"></p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="lightboxPrev()" class="w-10 h-10 border border-zinc-700 text-zinc-400 flex items-center justify-center hover:border-brand hover:text-brand transition-colors">
+                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="lightboxNext()" class="w-10 h-10 border border-zinc-700 text-zinc-400 flex items-center justify-center hover:border-brand hover:text-brand transition-colors">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="relative w-full overflow-hidden border border-zinc-800" style="height: 75vh;">
+                <iframe id="lightbox-iframe" class="w-full h-full border-0" src="" style="background: #0a0a0a;"></iframe>
+            </div>
+            <div class="flex items-center justify-between mt-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 bg-brand animate-pulse"></span>
+                    <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500" id="lightbox-counter">01 / 03</span>
+                </div>
+                <a id="lightbox-link" href="#" target="_blank" class="text-xs font-bold text-brand uppercase tracking-widest hover:text-white transition-colors flex items-center gap-2">
+                    Abrir em nova aba <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             // Initialize Icons
@@ -1365,8 +1754,184 @@
                         scrub: true
                     }
                 });
+
+                // ════════════════════════════════════════════
+                // PORTFÓLIO SECTION — ScrollTrigger Animations
+                // ════════════════════════════════════════════
+
+                gsap.fromTo('.portfolio-label',
+                    { opacity: 0, x: -30 },
+                    {
+                        opacity: 1, x: 0, duration: 0.8, ease: 'power2.out',
+                        scrollTrigger: { trigger: '#portfolio', start: 'top 80%' }
+                    }
+                );
+
+                gsap.fromTo('.portfolio-heading',
+                    { opacity: 0, y: 60 },
+                    {
+                        opacity: 1, y: 0, duration: 1.2, ease: 'power4.out',
+                        scrollTrigger: { trigger: '#portfolio', start: 'top 75%' }
+                    }
+                );
+
+                gsap.fromTo('.portfolio-desc',
+                    { opacity: 0, y: 30 },
+                    {
+                        opacity: 1, y: 0, duration: 0.9, ease: 'power2.out', delay: 0.2,
+                        scrollTrigger: { trigger: '#portfolio', start: 'top 75%' }
+                    }
+                );
+
+                gsap.fromTo('.portfolio-filters',
+                    { opacity: 0, y: 20 },
+                    {
+                        opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+                        scrollTrigger: { trigger: '.portfolio-filters', start: 'top 90%' }
+                    }
+                );
+
+                gsap.fromTo('.portfolio-card',
+                    { opacity: 0, y: 50, scale: 0.97 },
+                    {
+                        opacity: 1, y: 0, scale: 1,
+                        stagger: 0.15, duration: 1, ease: 'power3.out',
+                        scrollTrigger: { trigger: '#portfolio-grid', start: 'top 85%' }
+                    }
+                );
+
+                gsap.fromTo('.portfolio-stats',
+                    { opacity: 0, y: 25 },
+                    {
+                        opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+                        scrollTrigger: { trigger: '.portfolio-stats', start: 'top 90%' }
+                    }
+                );
+
+                gsap.fromTo('.portfolio-stats > div',
+                    { opacity: 0, y: 15 },
+                    {
+                        opacity: 1, y: 0,
+                        stagger: 0.1, duration: 0.6, ease: 'power2.out',
+                        scrollTrigger: { trigger: '.portfolio-stats', start: 'top 88%' }
+                    }
+                );
+
+                gsap.fromTo('.portfolio-cta',
+                    { opacity: 0, y: 20 },
+                    {
+                        opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+                        scrollTrigger: { trigger: '.portfolio-cta', start: 'top 92%' }
+                    }
+                );
+
+                gsap.to('.portfolio-ambient-left', {
+                    y: -50, ease: 'none',
+                    scrollTrigger: { trigger: '#portfolio', start: 'top bottom', end: 'bottom top', scrub: true }
+                });
+
+                gsap.to('.portfolio-ambient-right', {
+                    y: 30, ease: 'none',
+                    scrollTrigger: { trigger: '#portfolio', start: 'top bottom', end: 'bottom top', scrub: true }
+                });
             });
         });
+
+        // ════════════════════════════════════════════
+        // PORTFÓLIO — Filter & Lightbox Logic
+        // ════════════════════════════════════════════
+        (function() {
+            const portfolioData = [
+                {
+                    title: 'Thiago Lourenço',
+                    desc: 'Portfólio pessoal — Webflow Expert',
+                    url: 'assets/thiagolourenco/index.html',
+                    category: 'website'
+                },
+                {
+                    title: 'Luminous — AI Social',
+                    desc: 'Plataforma SaaS de automação com IA',
+                    url: 'assets/ai-social-automation.aura.build/index.html',
+                    category: 'saas'
+                },
+                {
+                    title: 'Creative Agency Template',
+                    desc: 'Landing page premium para agências',
+                    url: 'assets/creative-agency-template.aura.build/index.html',
+                    category: 'landing'
+                }
+            ];
+
+            let currentLightboxIndex = 0;
+
+            window.openLightbox = function(index) {
+                currentLightboxIndex = index;
+                const data = portfolioData[index];
+                const lightbox = document.getElementById('portfolio-lightbox');
+                document.getElementById('lightbox-title').textContent = data.title;
+                document.getElementById('lightbox-desc').textContent = data.desc;
+                document.getElementById('lightbox-iframe').src = data.url;
+                document.getElementById('lightbox-link').href = data.url;
+                document.getElementById('lightbox-counter').textContent =
+                    String(index + 1).padStart(2, '0') + ' / ' + String(portfolioData.length).padStart(2, '0');
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+
+            window.closeLightbox = function() {
+                const lightbox = document.getElementById('portfolio-lightbox');
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    document.getElementById('lightbox-iframe').src = '';
+                }, 400);
+            };
+
+            window.lightboxNext = function() {
+                const next = (currentLightboxIndex + 1) % portfolioData.length;
+                openLightbox(next);
+            };
+
+            window.lightboxPrev = function() {
+                const prev = (currentLightboxIndex - 1 + portfolioData.length) % portfolioData.length;
+                openLightbox(prev);
+            };
+
+            document.addEventListener('keydown', function(e) {
+                const lightbox = document.getElementById('portfolio-lightbox');
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight') lightboxNext();
+                if (e.key === 'ArrowLeft') lightboxPrev();
+            });
+
+            document.getElementById('portfolio-lightbox').addEventListener('click', function(e) {
+                if (e.target === this) closeLightbox();
+            });
+
+            // Filter Buttons
+            document.querySelectorAll('.portfolio-filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.portfolio-filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const filter = this.dataset.filter;
+                    document.querySelectorAll('.portfolio-card').forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = '';
+                            gsap.fromTo(card,
+                                { opacity: 0, y: 30, scale: 0.97 },
+                                { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'power2.out' }
+                            );
+                        } else {
+                            gsap.to(card, {
+                                opacity: 0, y: -10, duration: 0.3, ease: 'power2.in',
+                                onComplete: () => { card.style.display = 'none'; }
+                            });
+                        }
+                    });
+                });
+            });
+        })();
     </script>
 </body>
 
