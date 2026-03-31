@@ -473,42 +473,45 @@
             background: rgba(255, 51, 62, 0.05);
         }
 
-        /* Lightbox Modal */
+        /* Lightbox Modal — Fullscreen */
         .portfolio-lightbox {
             position: fixed;
             inset: 0;
             z-index: 9998;
-            background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.96);
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
+            cursor: zoom-out;
         }
         .portfolio-lightbox.active {
             opacity: 1;
             visibility: visible;
         }
-        .portfolio-lightbox .lightbox-content {
-            max-width: 1200px;
-            width: 95%;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            transform: scale(0.95) translateY(20px);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .portfolio-lightbox.active .lightbox-content {
-            transform: scale(1) translateY(0);
-        }
-        .portfolio-lightbox .lightbox-image {
+        .portfolio-lightbox .lightbox-img-fullscreen {
             width: 100%;
-            max-height: 75vh;
+            height: 100%;
             object-fit: contain;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            transform: scale(0.92);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+        }
+        .portfolio-lightbox.active .lightbox-img-fullscreen {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .portfolio-lightbox .lightbox-ui {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .portfolio-lightbox .lightbox-ui > * {
+            pointer-events: auto;
         }
         .portfolio-lightbox .lightbox-close {
             position: absolute;
@@ -516,20 +519,64 @@
             right: 24px;
             width: 48px;
             height: 48px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background 0.3s, border-color 0.3s;
+            transition: background 0.3s, border-color 0.3s, transform 0.3s;
             z-index: 10;
         }
         .portfolio-lightbox .lightbox-close:hover {
             background: #FF333E;
             border-color: #FF333E;
+            transform: rotate(90deg);
         }
+        .portfolio-lightbox .lightbox-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 32px 32px 28px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 16px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s;
+        }
+        .portfolio-lightbox.active .lightbox-info {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .portfolio-lightbox .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .portfolio-lightbox .lightbox-nav:hover {
+            border-color: #FF333E;
+            color: #FF333E;
+            background: rgba(255, 51, 62, 0.1);
+        }
+        .portfolio-lightbox .lightbox-nav.prev { left: 20px; }
+        .portfolio-lightbox .lightbox-nav.next { right: 20px; }
     </style>
 </head>
 
@@ -1513,40 +1560,41 @@
         </div>
     </section>
 
-    <!-- Lightbox Modal -->
-    <div class="portfolio-lightbox" id="portfolio-lightbox">
-        <button class="lightbox-close" onclick="closeLightbox()">
-            <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-        <div class="lightbox-content">
-            <div class="flex items-center justify-between mb-4">
+    <!-- Lightbox Modal — Fullscreen -->
+    <div class="portfolio-lightbox" id="portfolio-lightbox" onclick="if(event.target===this)closeLightbox()">
+
+        <!-- Fullscreen Image -->
+        <img id="lightbox-img" class="lightbox-img-fullscreen" src="" alt="" />
+        <iframe id="lightbox-iframe" style="display:none;" src=""></iframe>
+
+        <!-- Overlay UI -->
+        <div class="lightbox-ui">
+            <!-- Close -->
+            <button class="lightbox-close" onclick="closeLightbox()">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <!-- Prev / Next -->
+            <button class="lightbox-nav prev" onclick="lightboxPrev()">
+                <i data-lucide="chevron-left" class="w-6 h-6"></i>
+            </button>
+            <button class="lightbox-nav next" onclick="lightboxNext()">
+                <i data-lucide="chevron-right" class="w-6 h-6"></i>
+            </button>
+
+            <!-- Bottom Info Bar -->
+            <div class="lightbox-info">
                 <div>
-                    <h3 class="text-white font-display font-bold text-2xl tracking-tight" id="lightbox-title"></h3>
-                    <p class="text-zinc-500 text-sm font-sans mt-1" id="lightbox-desc"></p>
+                    <h3 class="text-white font-display font-bold text-xl md:text-2xl tracking-tight" id="lightbox-title"></h3>
+                    <p class="text-zinc-400 text-sm font-sans mt-1" id="lightbox-desc"></p>
                 </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="lightboxPrev()" class="w-10 h-10 border border-zinc-700 text-zinc-400 flex items-center justify-center hover:border-brand hover:text-brand transition-colors">
-                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
-                    </button>
-                    <button onclick="lightboxNext()" class="w-10 h-10 border border-zinc-700 text-zinc-400 flex items-center justify-center hover:border-brand hover:text-brand transition-colors">
-                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="relative w-full overflow-hidden border border-zinc-800" style="height: 75vh;">
-                <iframe id="lightbox-iframe" class="w-full h-full border-0" src="" style="background: #0a0a0a;"></iframe>
-                <img id="lightbox-img" class="w-full h-full object-contain object-top" src="" alt="" style="display: none; background: #0a0a0a;" />
-            </div>
-            <div class="flex items-center justify-between mt-3">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-3 flex-shrink-0">
                     <span class="w-1.5 h-1.5 bg-brand animate-pulse"></span>
-                    <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500" id="lightbox-counter">01 / 03</span>
+                    <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500" id="lightbox-counter">01 / 07</span>
                 </div>
-                <a id="lightbox-link" href="#" target="_blank" class="text-xs font-bold text-brand uppercase tracking-widest hover:text-white transition-colors flex items-center gap-2">
-                    Abrir em nova aba <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                </a>
             </div>
         </div>
+        <a id="lightbox-link" href="#" style="display:none;"></a>
     </div>
 
     <script>
