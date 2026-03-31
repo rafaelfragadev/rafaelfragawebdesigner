@@ -491,18 +491,49 @@
             opacity: 1;
             visibility: visible;
         }
+        .portfolio-lightbox .lightbox-img-wrap {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .portfolio-lightbox.zoomed .lightbox-img-wrap {
+            overflow: auto;
+            cursor: grab;
+        }
+        .portfolio-lightbox.zoomed .lightbox-img-wrap:active {
+            cursor: grabbing;
+        }
+        .portfolio-lightbox.zoomed .lightbox-img-wrap::-webkit-scrollbar { width: 6px; height: 6px; }
+        .portfolio-lightbox.zoomed .lightbox-img-wrap::-webkit-scrollbar-track { background: transparent; }
+        .portfolio-lightbox.zoomed .lightbox-img-wrap::-webkit-scrollbar-thumb { background: rgba(255,51,62,0.3); border-radius: 3px; }
         .portfolio-lightbox .lightbox-img-fullscreen {
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
             padding: 20px;
             transform: scale(0.92);
             opacity: 0;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease,
+                        max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1), max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: zoom-in;
+            flex-shrink: 0;
         }
         .portfolio-lightbox.active .lightbox-img-fullscreen {
             transform: scale(1);
             opacity: 1;
+        }
+        .portfolio-lightbox.zoomed .lightbox-img-fullscreen {
+            max-width: none;
+            max-height: none;
+            width: auto;
+            height: auto;
+            min-width: 150%;
+            padding: 40px;
+            cursor: zoom-out;
         }
         .portfolio-lightbox .lightbox-ui {
             position: absolute;
@@ -534,6 +565,41 @@
             background: #FF333E;
             border-color: #FF333E;
             transform: rotate(90deg);
+        }
+        .portfolio-lightbox .lightbox-zoom-btn {
+            position: absolute;
+            top: 20px;
+            right: 82px;
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s, color 0.3s;
+            z-index: 10;
+        }
+        .portfolio-lightbox .lightbox-zoom-btn:hover {
+            border-color: #FF333E;
+            color: #FF333E;
+            background: rgba(255, 51, 62, 0.1);
+        }
+        .portfolio-lightbox.zoomed .lightbox-zoom-btn {
+            border-color: #FF333E;
+            background: rgba(255, 51, 62, 0.15);
+            color: #FF333E;
+        }
+        .portfolio-lightbox.zoomed .lightbox-info {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+        .portfolio-lightbox.zoomed .lightbox-nav {
+            opacity: 0.3;
         }
         .portfolio-lightbox .lightbox-info {
             position: absolute;
@@ -1560,15 +1626,22 @@
         </div>
     </section>
 
-    <!-- Lightbox Modal — Fullscreen -->
-    <div class="portfolio-lightbox" id="portfolio-lightbox" onclick="if(event.target===this)closeLightbox()">
+    <!-- Lightbox Modal — Fullscreen + Zoom -->
+    <div class="portfolio-lightbox" id="portfolio-lightbox">
 
-        <!-- Fullscreen Image -->
-        <img id="lightbox-img" class="lightbox-img-fullscreen" src="" alt="" />
+        <!-- Scrollable Image Container -->
+        <div class="lightbox-img-wrap" id="lightbox-img-wrap" onclick="if(event.target===this)closeLightbox()">
+            <img id="lightbox-img" class="lightbox-img-fullscreen" src="" alt="" onclick="toggleLightboxZoom()" />
+        </div>
         <iframe id="lightbox-iframe" style="display:none;" src=""></iframe>
 
         <!-- Overlay UI -->
         <div class="lightbox-ui">
+            <!-- Zoom Toggle -->
+            <button class="lightbox-zoom-btn" onclick="toggleLightboxZoom()" title="Zoom" id="lightbox-zoom-btn">
+                <i data-lucide="zoom-in" class="w-5 h-5" id="lightbox-zoom-icon"></i>
+            </button>
+
             <!-- Close -->
             <button class="lightbox-close" onclick="closeLightbox()">
                 <i data-lucide="x" class="w-5 h-5"></i>
@@ -2038,6 +2111,8 @@
                 document.getElementById('lightbox-counter').textContent =
                     String(index + 1).padStart(2, '0') + ' / ' + String(portfolioData.length).padStart(2, '0');
 
+                lightbox.classList.remove('zoomed');
+                resetZoomIcon();
                 img.src = data.img;
                 img.style.display = 'block';
                 document.getElementById('lightbox-iframe').style.display = 'none';
@@ -2049,12 +2124,39 @@
 
             window.closeLightbox = function() {
                 const lightbox = document.getElementById('portfolio-lightbox');
-                lightbox.classList.remove('active');
+                lightbox.classList.remove('active', 'zoomed');
+                resetZoomIcon();
                 document.body.style.overflow = '';
                 setTimeout(() => {
                     document.getElementById('lightbox-img').src = '';
                 }, 400);
             };
+
+            window.toggleLightboxZoom = function() {
+                const lightbox = document.getElementById('portfolio-lightbox');
+                const wrap = document.getElementById('lightbox-img-wrap');
+                const isZoomed = lightbox.classList.toggle('zoomed');
+                const iconEl = document.getElementById('lightbox-zoom-icon');
+
+                if (isZoomed) {
+                    iconEl.setAttribute('data-lucide', 'zoom-out');
+                    setTimeout(() => {
+                        wrap.scrollTop = wrap.scrollHeight * 0.15;
+                        wrap.scrollLeft = (wrap.scrollWidth - wrap.clientWidth) / 2;
+                    }, 100);
+                } else {
+                    iconEl.setAttribute('data-lucide', 'zoom-in');
+                }
+                lucide.createIcons();
+            };
+
+            function resetZoomIcon() {
+                const iconEl = document.getElementById('lightbox-zoom-icon');
+                if (iconEl) {
+                    iconEl.setAttribute('data-lucide', 'zoom-in');
+                    lucide.createIcons();
+                }
+            }
 
             window.lightboxNext = function() {
                 const next = (currentLightboxIndex + 1) % portfolioData.length;
